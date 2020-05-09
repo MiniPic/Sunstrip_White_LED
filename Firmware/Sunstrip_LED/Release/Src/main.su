@@ -1,0 +1,7 @@
+main.c:169:6:SystemClock_Config	96	static
+main.c:85:5:main	88	static
+main.c:454:1:HAL_UART_RxCpltCallback	0	static
+main.c:482:6:setPWM	48	static
+main.c:517:6:StartDefaultTask	152	static
+main.c:496:6:setPWM_duty	4	static
+main.c:597:6:Error_Handler	0	static

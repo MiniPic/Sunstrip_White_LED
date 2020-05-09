@@ -1,0 +1,5 @@
+Added Component: Designator=F1(FUSPO-A1)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=NetF1_1 Pin=F1-1
+Added Pin To Net: NetName=+ALIM Pin=F1-2
+Added Member To Class: ClassName=Power_Supply Member=Component F1 FUS 5X20

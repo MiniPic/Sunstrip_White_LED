@@ -1,0 +1,4 @@
+Change Component Footprint: Designator=U4 Old Footprint=REG5VD New Footprint=REG5VE
+Added Pin To Net: NetName=GND Pin=U4-6
+Added Pin To Net: NetName=GND Pin=U4-7
+Added Pin To Net: NetName=+ALIM Pin=U4-8

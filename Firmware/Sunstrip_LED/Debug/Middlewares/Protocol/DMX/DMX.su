@@ -1,0 +1,4 @@
+DMX.c:42:6:Protocol_DMX_init	24	static
+DMX.c:70:6:Protocol_DMX_UartCallback	24	static
+DMX.c:119:9:Protocol_DMX_GetValue	16	static
+DMX.c:128:10:Protocol_DMX_GetLastTickFrame	4	static

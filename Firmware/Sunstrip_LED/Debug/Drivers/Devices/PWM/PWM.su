@@ -1,0 +1,2 @@
+PWM.c:25:6:PWM_SetPWM	56	static
+PWM.c:39:6:PWM_SetDuty	56	static
