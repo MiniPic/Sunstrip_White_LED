@@ -13,9 +13,11 @@
 #include "../Middlewares/Protocol/DMX/DMX.h"
 #include "../Drivers/Devices/Display/ssd1306.h"
 #include "../Drivers/System/Flash_Manager.h"
+#include "../Drivers/Devices/PWM/PWM.h"
 #include "cmsis_os.h"
 #include "App.h"
 #include "main.h"
+#include "stdio.h"
 
 /* Macros ---------------------------------------------------------------*/
 #define 	ParamExist()				(FlashManager_ReadInt32(PARAM_EXIST_ADDRESS)==PARAM_EXIST_CODE)
@@ -39,6 +41,10 @@
 #define		__TRUE						0x01
 #define 	__FALSE						0x00
 
+#define 	MIN_LED_PWM_VALUE			63
+#define 	MAX_LED_PWM_VALUE			244
+
+
 /* Types Definitions ---------------------------------------------------------*/
 typedef enum {	MODE_OFF = 0x00,
 				MODE_DMX = 0x01,
@@ -51,21 +57,13 @@ typedef enum {	BP_OFF,
 				BP_IDLE,
 }BP_Status;
 
-/* Public variables ----------------------------------------------------------*/
-
-
 /* Private variables ---------------------------------------------------------*/
 osThreadId 			AppLEDTaskHandle;
 osThreadId 			AppIHMTaskHandle;
 
-UART_HandleTypeDef* Ref_dmxuart;
-TIM_HandleTypeDef* 	LED_PWMtimer;
-uint32_t 			LED_PWMchannel;
-I2C_HandleTypeDef* 	I2C_display;
-
 uint16_t			DMX_Adress;
 
-uint8_t				DMX_value;
+uint8_t				DMX_values[10];
 uint8_t				Manu_value;
 uint8_t				DMX_signal_OK;
 App_Mode			Current_Mode;
@@ -135,14 +133,14 @@ void Update_Display()
     }
     else								//DMX
     {
-    	percent_value = (uint32_t)(DMX_value*100/255);
+    	percent_value = (DMX_values[0]*100/255);
     	sprintf(Str_add,"%03d",DMX_Adress);
     	if(DMX_signal_OK)
 		{
 			SSD1306_GotoXY (0, 45);
 			SSD1306_Puts ("SIGNAL :OK", &Font_11x18, 1);
 			sprintf(Str_percent,"%03d",percent_value);
-			sprintf(Str_dmx,"%03d",DMX_value);
+			sprintf(Str_dmx,"%03d",DMX_values[0]);
 		}
 		else
 		{
@@ -173,7 +171,8 @@ void Manage_Button()
 	static uint32_t time_BpDown=0;
 	static uint32_t time_BpOk=0;
 
-	if(!HAL_GPIO_ReadPin(BP_UP_GPIO_Port, BP_UP_Pin))
+	//UP
+	if(!HAL_GPIO_ReadPin(T1_GPIO_Port, T1_Pin))
 	{
 		if(Bp_Up==BP_OFF)
 		{
@@ -191,7 +190,8 @@ void Manage_Button()
 	else
 		Bp_Up=BP_OFF;
 
-	if(!HAL_GPIO_ReadPin(BP_DOWN_GPIO_Port, BP_DOWN_Pin))
+	//DOWN
+	if(!HAL_GPIO_ReadPin(T3_GPIO_Port, T3_Pin))
 	{
 		if(Bp_Down==BP_OFF)
 		{
@@ -209,7 +209,8 @@ void Manage_Button()
 	else
 		Bp_Down=BP_OFF;
 
-	if(!HAL_GPIO_ReadPin(BP_OK_GPIO_Port, BP_OK_Pin))
+	//OK
+	if(!HAL_GPIO_ReadPin(T2_GPIO_Port, T2_Pin))
 	{
 		if(Bp_Ok==BP_OFF)
 		{
@@ -235,22 +236,22 @@ void AppLEDTask(void const * argument)
 		osDelay(TASK_DELAY_LED);
 
 		if(Current_Mode == MODE_OFF)
-			PWM_SetDuty(LED_PWMtimer,LED_PWMchannel,0);
+			PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);
 		else if(Current_Mode == MODE_MANU)
-			PWM_SetDuty(LED_PWMtimer,LED_PWMchannel,(uint32_t)Manu_value*255/100);
+			PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Manu_value*255/100);
 		else
 		{
-			DMX_value = Protocol_DMX_GetValue(1);									//CHANNEL 1
+			DMX_values[0] = Protocol_DMX_GetValue(1);									//CHANNEL 1
 			if(HAL_GetTick()>Protocol_DMX_GetLastTickFrame()+TIMOUT_DMX_SIGNAL)
 			{
-				DMX_value=0;				//OFF LED if no signal
+				DMX_values[0]=0;				//OFF LED if no signal
 				DMX_signal_OK = __FALSE;
 			}
 			else
 			{
 				DMX_signal_OK = __TRUE;
 			}
-			PWM_SetDuty(LED_PWMtimer,LED_PWMchannel,(uint32_t)DMX_value);
+			PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)DMX_values[0]);
 		}
 	}
 }
@@ -331,7 +332,7 @@ void AppIHMTask(void const * argument)
 					DMX_Adress++;
 				param_changed = __TRUE;
 				tick_save_param = HAL_GetTick();
-				Protocol_DMX_init(DMX_Adress,Ref_dmxuart);
+				Protocol_DMX_init(DMX_Adress,DMX_uart);
 			}
 			if(Bp_Up == BP_1s)
 			{
@@ -341,7 +342,7 @@ void AppIHMTask(void const * argument)
 					DMX_Adress=512;
 				param_changed = __TRUE;
 				tick_save_param = HAL_GetTick();
-				Protocol_DMX_init(DMX_Adress,Ref_dmxuart);
+				Protocol_DMX_init(DMX_Adress,DMX_uart);
 			}
 			if(Bp_Down == BP_CLICK)
 			{
@@ -349,7 +350,7 @@ void AppIHMTask(void const * argument)
 					DMX_Adress--;
 				param_changed = __TRUE;
 				tick_save_param = HAL_GetTick();
-				Protocol_DMX_init(DMX_Adress,Ref_dmxuart);
+				Protocol_DMX_init(DMX_Adress,DMX_uart);
 			}
 			if(Bp_Down == BP_1s)
 			{
@@ -359,7 +360,7 @@ void AppIHMTask(void const * argument)
 					DMX_Adress=1;
 				param_changed = __TRUE;
 				tick_save_param = HAL_GetTick();
-				Protocol_DMX_init(DMX_Adress,Ref_dmxuart);
+				Protocol_DMX_init(DMX_Adress,DMX_uart);
 			}
 		}
 
@@ -372,23 +373,31 @@ void AppIHMTask(void const * argument)
 }
 
 /* Public function -----------------------------------------------*/
-void App_Init(UART_HandleTypeDef* ref_uart,TIM_HandleTypeDef* LED_pwmtimer, uint32_t LED_PWMchannel, I2C_HandleTypeDef* hi2c_display)
+void App_Init()
 {
-	Ref_dmxuart = ref_uart;
-	LED_PWMtimer = LED_pwmtimer;
-	LED_PWMchannel = LED_PWMchannel;
-	I2C_display = hi2c_display;
-
 	Load_Param();
 
 	DMX_signal_OK = __FALSE;
-	Protocol_DMX_init(DMX_Adress,Ref_dmxuart);
-	PWM_SetPWM(LED_PWMtimer,LED_PWMchannel,LED_PWM_PERIOD_VALUE,128);		//PWM Off
-	SSD1306_Init(I2C_display);  // initialise
+
+	PWM_SetPWM(LED1_pwmtimer,LED1_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED2_pwmtimer,LED2_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED3_pwmtimer,LED3_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED4_pwmtimer,LED4_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED5_pwmtimer,LED5_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED6_pwmtimer,LED6_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED7_pwmtimer,LED7_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED8_pwmtimer,LED8_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED9_pwmtimer,LED9_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED10_pwmtimer,LED10_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+
+	Protocol_DMX_init(DMX_Adress,DMX_uart);
+	SSD1306_Init(hi2c_display);  // initialise
 
 	Bp_Up = BP_OFF;
 	Bp_Down = BP_OFF;
 	Bp_Ok = BP_OFF;
+
+	CreatAppTasks();
 }
 
 void CreatAppTasks (void)
@@ -401,3 +410,9 @@ void CreatAppTasks (void)
 }
 
 
+HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	Protocol_DMX_UartCallback(huart);
+
+	return 0;
+}

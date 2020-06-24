@@ -1,3 +1,4 @@
+event_groups.c:93:21:xEventGroupCreateStatic	32	static,ignoring_inline_asm
 event_groups.c:142:21:xEventGroupCreate	16	static
 event_groups.c:176:13:xEventGroupSync	56	static,ignoring_inline_asm
 event_groups.c:296:13:xEventGroupWaitBits	72	static,ignoring_inline_asm

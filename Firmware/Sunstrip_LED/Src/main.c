@@ -29,7 +29,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "App.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,7 +101,36 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  App_Init(&huart2,&htim2,TIM_CHANNEL_1,&hi2c1);
+
+  DMX_uart = &huart2;
+
+  LED1_pwmtimer = &htim1;
+  LED1_PWMchannel = TIM_CHANNEL_1;
+  LED2_pwmtimer = &htim1;
+  LED2_PWMchannel = TIM_CHANNEL_2;
+  LED3_pwmtimer = &htim1;
+  LED3_PWMchannel = TIM_CHANNEL_3;
+  LED4_pwmtimer = &htim1;
+  LED4_PWMchannel = TIM_CHANNEL_4;
+  LED5_pwmtimer = &htim2;
+  LED5_PWMchannel = TIM_CHANNEL_1;
+  LED6_pwmtimer = &htim2;
+  LED6_PWMchannel = TIM_CHANNEL_2;
+  LED7_pwmtimer = &htim2;
+  LED7_PWMchannel = TIM_CHANNEL_3;
+  LED8_pwmtimer = &htim2;
+  LED8_PWMchannel = TIM_CHANNEL_4;
+  LED9_pwmtimer = &htim3;
+  LED9_PWMchannel = TIM_CHANNEL_1;
+  LED10_pwmtimer = &htim3;
+  LED10_PWMchannel = TIM_CHANNEL_2;
+
+  FAN_pwmtimer = &htim3;
+  FAN_PWMchannel = TIM_CHANNEL_3;
+
+  hi2c_display = &hi2c1;
+
+  App_Init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
@@ -167,10 +196,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	Protocol_DMX_UartCallback(huart);
-}
+
 
 /* USER CODE END 4 */
 

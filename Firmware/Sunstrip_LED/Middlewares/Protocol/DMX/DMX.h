@@ -16,7 +16,7 @@
 #include "stm32f1xx_hal.h"
 
 /* Definitions ------------------------------------------------------------------*/
-#define DMX_SIZE_CHANNEL		1			//Number of device DMX channels
+#define DMX_SIZE_CHANNEL		12			//Number of device DMX channels
 //#define DMX_DOUBLE_READ_CHECK				//comment if not used
 
 /* Private Definitions ------------------------------------------------------------------*/

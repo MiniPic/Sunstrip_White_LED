@@ -17,6 +17,8 @@ Src/App.o: ../Src/App.c ../Src/../Middlewares/Protocol/DMX/DMX.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
@@ -27,6 +29,7 @@ Src/App.o: ../Src/App.c ../Src/../Middlewares/Protocol/DMX/DMX.h \
  ../Src/../Drivers/Devices/Display/ssd1306.h \
  ../Src/../Drivers/Devices/Display/__Fonts.h \
  ../Src/../Drivers/System/Flash_Manager.h \
+ ../Src/../Drivers/Devices/PWM/PWM.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Inc/FreeRTOSConfig.h \
@@ -84,6 +87,10 @@ Src/App.o: ../Src/App.c ../Src/../Middlewares/Protocol/DMX/DMX.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h:
 
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h:
+
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h:
+
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
@@ -103,6 +110,8 @@ Src/App.o: ../Src/App.c ../Src/../Middlewares/Protocol/DMX/DMX.h \
 ../Src/../Drivers/Devices/Display/__Fonts.h:
 
 ../Src/../Drivers/System/Flash_Manager.h:
+
+../Src/../Drivers/Devices/PWM/PWM.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 

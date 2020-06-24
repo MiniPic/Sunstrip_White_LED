@@ -32,21 +32,24 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-DMX_Decoupe.elf \
+Sunstrip_LED.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-DMX_Decoupe.list \
+Sunstrip_LED.list \
+
+OBJCOPY_BIN += \
+Sunstrip_LED.bin \
 
 
 # All Target
-all: DMX_Decoupe.elf secondary-outputs
+all: Sunstrip_LED.elf secondary-outputs
 
 # Tool invocations
-DMX_Decoupe.elf: $(OBJS) $(USER_OBJS) C:\Users\Tour\STM32CubeIDE\workspace_1.0.2\DMX_Decoupe\STM32F103C8TX_FLASH.ld
-	arm-none-eabi-gcc -o "DMX_Decoupe.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\Tour\STM32CubeIDE\workspace_1.0.2\DMX_Decoupe\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DMX_Decoupe.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Sunstrip_LED.elf: $(OBJS) $(USER_OBJS) Z:\TECHNIQUE\Projets\Sunstrip_White_LED\Firmware\Sunstrip_LED\STM32F103C8TX_FLASH.ld
+	arm-none-eabi-gcc -o "Sunstrip_LED.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"Z:\TECHNIQUE\Projets\Sunstrip_White_LED\Firmware\Sunstrip_LED\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Sunstrip_LED.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -55,8 +58,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-DMX_Decoupe.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "DMX_Decoupe.list"
+Sunstrip_LED.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Sunstrip_LED.list"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+Sunstrip_LED.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Sunstrip_LED.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
@@ -65,7 +73,7 @@ clean:
 	-$(RM) *
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 .PHONY: all clean dependents
 .SECONDARY:
