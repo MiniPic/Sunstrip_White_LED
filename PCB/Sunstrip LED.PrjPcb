@@ -52,7 +52,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=URPLKPJS
+DocumentUniqueId=SYCWXLHO
 
 [Document2]
 DocumentPath=ToDo.Txt
@@ -294,59 +294,13 @@ DocumentUniqueId=
 
 [ProjectVariant1]
 UniqueID=FABA2193-BA85-4DE5-AB83-255ABCB5F6D5
-Description=Decoupe
+Description=Sunstrip standard
 AllowFabrication=0
 ParameterCount=0
-VariationCount=49
-Variation1=Designator=S2|UniqueId=\ILQPGFWA|Kind=1|AlternatePart= 
-Variation2=Designator=S1|UniqueId=\JIIAXSNI|Kind=0|AlternatePart= 
-Variation3=Designator=D4|UniqueId=\ALJTUDPD|Kind=1|AlternatePart= 
-Variation4=Designator=D3|UniqueId=\XYXYXYEF|Kind=1|AlternatePart= 
-Variation5=Designator=D2|UniqueId=\WTTPSBYT|Kind=1|AlternatePart= 
-Variation6=Designator=G1|UniqueId=\KCHFIGWY|Kind=1|AlternatePart= 
-Variation7=Designator=D9|UniqueId=\CYEBRVKP|Kind=1|AlternatePart= 
-Variation8=Designator=G2|UniqueId=\IIDGUPJK|Kind=1|AlternatePart= 
-Variation9=Designator=D10|UniqueId=\RLJBLVNL|Kind=1|AlternatePart= 
-Variation10=Designator=T7|UniqueId=\YTWJHWWX|Kind=1|AlternatePart= 
-Variation11=Designator=T6|UniqueId=\USQKDSKD|Kind=1|AlternatePart= 
-Variation12=Designator=R31|UniqueId=\QMBMOGSM|Kind=1|AlternatePart= 
-Variation13=Designator=R30|UniqueId=\BYHGEGOJ|Kind=1|AlternatePart= 
-Variation14=Designator=J7|UniqueId=\RXGFKKRA|Kind=1|AlternatePart= 
-Variation15=Designator=U11|UniqueId=\CKNJAQJP|Kind=1|AlternatePart= 
-Variation16=Designator=U12|UniqueId=\GRJAJAMT|Kind=1|AlternatePart= 
-Variation17=Designator=J8|UniqueId=\CCFSAAGH|Kind=1|AlternatePart= 
-Variation18=Designator=J6|UniqueId=\GIGSDNXT|Kind=1|AlternatePart= 
-Variation19=Designator=T2|UniqueId=\BTAFNAFS|Kind=1|AlternatePart= 
-Variation20=Designator=R15|UniqueId=\CBVJFIFS|Kind=1|AlternatePart= 
-Variation21=Designator=R19|UniqueId=\TYFTMGPE|Kind=1|AlternatePart= 
-Variation22=Designator=T3|UniqueId=\RVRAPALI|Kind=1|AlternatePart= 
-Variation23=Designator=R16|UniqueId=\QVUTFYCS|Kind=1|AlternatePart= 
-Variation24=Designator=R20|UniqueId=\VHJGGDGK|Kind=1|AlternatePart= 
-Variation25=Designator=T4|UniqueId=\TWOQPEBR|Kind=1|AlternatePart= 
-Variation26=Designator=R17|UniqueId=\BHAGWLLF|Kind=1|AlternatePart= 
-Variation27=Designator=R21|UniqueId=\KHKVOSRA|Kind=1|AlternatePart= 
-Variation28=Designator=R23|UniqueId=\MWRQDYGE|Kind=1|AlternatePart= 
-Variation29=Designator=C23|UniqueId=\MGDMESSM|Kind=1|AlternatePart= 
-Variation30=Designator=R29|UniqueId=\WEDJRKLS|Kind=1|AlternatePart= 
-Variation31=Designator=R28|UniqueId=\EQCXYBSI|Kind=1|AlternatePart= 
-Variation32=Designator=R25|UniqueId=\TWFBSLBQ|Kind=1|AlternatePart= 
-Variation33=Designator=C25|UniqueId=\KESCVUYJ|Kind=1|AlternatePart= 
-Variation34=Designator=C29|UniqueId=\MOQJBIAI|Kind=1|AlternatePart= 
-Variation35=Designator=R35|UniqueId=\EBCDFQNM|Kind=1|AlternatePart= 
-Variation36=Designator=U10|UniqueId=\HTOEVHAC|Kind=1|AlternatePart= 
-Variation37=Designator=C27|UniqueId=\FAWWUFFH|Kind=1|AlternatePart= 
-Variation38=Designator=R33|UniqueId=\NNJHUUYA|Kind=1|AlternatePart= 
-Variation39=Designator=R39|UniqueId=\VOFTVCWR|Kind=1|AlternatePart= 
-Variation40=Designator=R40|UniqueId=\FXMQLKQL|Kind=1|AlternatePart= 
-Variation41=Designator=R38|UniqueId=\NYKUWALG|Kind=1|AlternatePart= 
-Variation42=Designator=R37|UniqueId=\SDYIDVSN|Kind=1|AlternatePart= 
-Variation43=Designator=C26|UniqueId=\ERKMVPTR|Kind=1|AlternatePart= 
-Variation44=Designator=R32|UniqueId=\EUDJEVDN|Kind=1|AlternatePart= 
-Variation45=Designator=U9|UniqueId=\YEWJUHAE|Kind=1|AlternatePart= 
-Variation46=Designator=R34|UniqueId=\YDVBRCAL|Kind=1|AlternatePart= 
-Variation47=Designator=C28|UniqueId=\KFEUEREW|Kind=1|AlternatePart= 
-Variation48=Designator=R36|UniqueId=\NXLGPLLB|Kind=1|AlternatePart= 
-Variation49=Designator=R41|UniqueId=\HXIRXYVV|Kind=1|AlternatePart= 
+VariationCount=3
+Variation1=Designator=R11|UniqueId=\FXQSPQOL|Kind=1|AlternatePart= 
+Variation2=Designator=R13|UniqueId=\JGMHTMRE|Kind=1|AlternatePart= 
+Variation3=Designator=R10|UniqueId=\CVPFAESL|Kind=1|AlternatePart= 
 ParamVariationCount=0
 
 [GeneratedDocument1]
@@ -707,34 +661,36 @@ Name=Report Outputs
 Description=
 TargetPrinter=Brother HL-1110 series
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
-OutputType1=BOM_PartType
-OutputName1=Bill of Materials
+OutputType1=Script
+OutputName1=Script Output
 OutputDocumentPath1=
 OutputVariantName1=[No Variations]
 OutputDefault1=0
-PageOptions1=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
-OutputType2=ComponentCrossReference
-OutputName2=Component Cross Reference Report
+OutputType2=SimpleBOM
+OutputName2=Simple BOM
 OutputDocumentPath2=
 OutputVariantName2=[No Variations]
 OutputDefault2=0
-OutputType3=ReportHierarchy
-OutputName3=Report Project Hierarchy
+OutputType3=SinglePinNetReporter
+OutputName3=Report Single Pin Nets
 OutputDocumentPath3=
 OutputVariantName3=[No Variations]
 OutputDefault3=0
-OutputType4=Script
-OutputName4=Script Output
+OutputType4=BOM_PartType
+OutputName4=Bill of Materials
 OutputDocumentPath4=
 OutputVariantName4=[No Variations]
 OutputDefault4=0
-OutputType5=SimpleBOM
-OutputName5=Simple BOM
+PageOptions4=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+Configuration4_Name1=ColumnNameFormat
+Configuration4_Item1=CaptionAsName
+OutputType5=ComponentCrossReference
+OutputName5=Component Cross Reference Report
 OutputDocumentPath5=
 OutputVariantName5=[No Variations]
 OutputDefault5=0
-OutputType6=SinglePinNetReporter
-OutputName6=Report Single Pin Nets
+OutputType6=ReportHierarchy
+OutputName6=Report Project Hierarchy
 OutputDocumentPath6=
 OutputVariantName6=[No Variations]
 OutputDefault6=0

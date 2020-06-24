@@ -1,0 +1,1 @@
+Corriger P1 (CTN) les deux pattes sont au GND

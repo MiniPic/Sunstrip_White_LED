@@ -1,0 +1,6 @@
+[0621/174110:ERROR:backend_impl.cc(1037)] Critical error found -8
+[0621/174110:ERROR:entry_impl.cc(1035)] No file for a1010018
+[0621/174110:WARNING:storage_block-inl.h(131)] Failed data load.
+[0621/174110:ERROR:cache_util_win.cc(20)] Unable to move the cache: 5
+[0621/174110:ERROR:cache_util.cc(134)] Unable to move cache folder C:\ProgramData\Altium\Altium Designer {12281265-8143-4051-A2BE-A2B91B2C9ED6}\BrowserCache to C:\ProgramData\Altium\Altium Designer {12281265-8143-4051-A2BE-A2B91B2C9ED6}\old_BrowserCache_000
+[0621/174110:ERROR:backend_impl.cc(2020)] Corrupt Index file
