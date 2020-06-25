@@ -387,8 +387,8 @@ void App_Init()
 	PWM_SetPWM(LED6_pwmtimer,LED6_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
 	PWM_SetPWM(LED7_pwmtimer,LED7_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
 	PWM_SetPWM(LED8_pwmtimer,LED8_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED9_pwmtimer,LED9_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED10_pwmtimer,LED10_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
+	PWM_SetPWM(LED9_pwmtimer,LED9_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off*/
+	PWM_SetPWM(LED10_pwmtimer,LED10_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
 
 	Protocol_DMX_init(DMX_Adress,DMX_uart);
 	SSD1306_Init(hi2c_display);  // initialise
@@ -413,6 +413,4 @@ void CreatAppTasks (void)
 HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	Protocol_DMX_UartCallback(huart);
-
-	return 0;
 }

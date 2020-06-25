@@ -93,13 +93,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_I2C1_Init();
   MX_TIM2_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
+  //MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   DMX_uart = &huart2;
@@ -128,7 +128,7 @@ int main(void)
   FAN_pwmtimer = &htim3;
   FAN_PWMchannel = TIM_CHANNEL_3;
 
-  hi2c_display = &hi2c1;
+  hi2c_display = 0;//&hi2c1;
 
   App_Init();
   /* USER CODE END 2 */

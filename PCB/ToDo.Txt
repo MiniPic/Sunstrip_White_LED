@@ -1,1 +1,2 @@
 Corriger P1 (CTN) les deux pattes sont au GND
+Décaler la serigraphie en bottom sur le connecteur 11 points

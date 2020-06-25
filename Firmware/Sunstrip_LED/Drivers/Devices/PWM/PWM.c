@@ -38,10 +38,5 @@ void PWM_SetPWM(TIM_HandleTypeDef* timer, uint32_t channel, uint16_t period,uint
 
 void PWM_SetDuty(TIM_HandleTypeDef* timer, uint32_t channel, uint16_t pulse)
 {
-	 TIM_OC_InitTypeDef sConfigOC;
-	 sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	 sConfigOC.Pulse = pulse; // set the pulse duration
-	 sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-	 sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 	 __HAL_TIM_SET_COMPARE(timer, channel, pulse);
 }
