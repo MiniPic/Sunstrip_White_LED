@@ -43,8 +43,9 @@ SDA        |PB7          |Serial data line
 #include "string.h"
 
 
-
 /* Definitions ------------------------------------------------------------------*/
+/* I2C Mode */
+#define GENERATED_I2C			//Comment if not I2C generated
 
 /* I2C address */
 #ifndef SSD1306_I2C_ADDR
@@ -92,7 +93,11 @@ typedef enum {
  *           - 0: LCD was not detected on I2C port
  *           - > 0: LCD initialized OK and ready to use
  */
+#ifndef GENERATED_I2C
 uint8_t SSD1306_Init(I2C_HandleTypeDef* hi2c);
+#else
+uint8_t SSD1306_Init();
+#endif
 
 /** 
  * @brief  Updates buffer from internal RAM to LCD

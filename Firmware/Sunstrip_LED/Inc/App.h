@@ -40,7 +40,7 @@ TIM_HandleTypeDef* 	FAN_pwmtimer;
 uint32_t 			FAN_PWMchannel;
 
 
-I2C_HandleTypeDef* 	hi2c_display;
+//I2C_HandleTypeDef* 	hi2c_display;
 
 /* Public prototypes -----------------------------------------------*/
 void App_Init();

@@ -100,6 +100,10 @@ void Error_Handler(void);
 #define USART_TX_DUBUG_GPIO_Port GPIOB
 #define USART_RX_DUBUG_Pin GPIO_PIN_7
 #define USART_RX_DUBUG_GPIO_Port GPIOB
+#define SCL_IO_Pin GPIO_PIN_8
+#define SCL_IO_GPIO_Port GPIOB
+#define SDA_IO_Pin GPIO_PIN_9
+#define SDA_IO_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

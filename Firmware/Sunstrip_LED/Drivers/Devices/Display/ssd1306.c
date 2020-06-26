@@ -21,7 +21,9 @@
 #define ABS(x)   ((x) > 0 ? (x) : -(x))
 
 /* Private Variables ---------------------------------------------------------*/
+#ifndef GENERATED_I2C
 I2C_HandleTypeDef* ssd1306_i2c;
+#endif
 
 /* SSD1306 data buffer */
 static uint8_t SSD1306_Buffer[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
@@ -140,8 +142,8 @@ void SSD1306_DrawBitmap(int16_t x, int16_t y, const unsigned char* bitmap, int16
 
 
 
-
-uint8_t SSD1306_Init(I2C_HandleTypeDef* hi2c) {
+#ifndef GENERATED_I2C
+	uint8_t SSD1306_Init(I2C_HandleTypeDef* hi2c) {
 
 	ssd1306_i2c = hi2c;
 
@@ -153,6 +155,12 @@ uint8_t SSD1306_Init(I2C_HandleTypeDef* hi2c) {
 		/* Return false */
 		return 0;
 	}
+#else
+	uint8_t SSD1306_Init() {
+
+		/* Init I2C */
+		ssd1306_I2C_Init();
+#endif
 	
 	/* A little delay */
 	uint32_t p = 2500;
@@ -609,16 +617,12 @@ void SSD1306_OFF(void) {
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Automatic I2C
+#ifndef GENERATED_I2C
 void ssd1306_I2C_Init() {
-	//MX_I2C1_Init();
 	uint32_t p = 250000;
 	while(p>0)
 		p--;
-	//HAL_I2C_DeInit(&hi2c1);
-	//p = 250000;
-	//while(p>0)
-	//	p--;
-	//MX_I2C1_Init();
 }
 
 void ssd1306_I2C_WriteMulti(uint8_t address, uint8_t reg, uint8_t* data, uint16_t count) {
@@ -637,3 +641,35 @@ void ssd1306_I2C_Write(uint8_t address, uint8_t reg, uint8_t data) {
 	dt[1] = data;
 	HAL_I2C_Master_Transmit(ssd1306_i2c, address, dt, 2, 10);
 }
+#endif
+
+//Generated I2C
+#ifdef GENERATED_I2C
+void ssd1306_I2C_Init() {
+	//DWT_Delay_Init ();
+}
+
+void ssd1306_I2C_WriteMulti(uint8_t address, uint8_t reg, uint8_t* data, uint16_t count) {
+	uint8_t dt[256];
+	dt[0] = reg;
+	uint8_t i;
+	for(i = 0; i < count; i++)
+		dt[i+1] = data[i];
+	//HAL_I2C_Master_Transmit(ssd1306_i2c, address, dt, count+1, 10);
+}
+
+
+void ssd1306_I2C_Write(uint8_t address, uint8_t reg, uint8_t data) {
+	uint8_t dt[2];
+	dt[0] = reg;
+	dt[1] = data;
+	//HAL_I2C_Master_Transmit(ssd1306_i2c, address, dt, 2, 10);
+}
+
+void _Master_Generated_I2C(uint8_t reg, uint8_t* data, uint16_t count)
+{
+	//HAL_GPIO_WritePin(GPIOB, SCL_IO_Pin|SDA_IO_Pin, GPIO_PIN_SET);
+}
+
+
+#endif

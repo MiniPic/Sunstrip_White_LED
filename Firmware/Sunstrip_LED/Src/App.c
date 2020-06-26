@@ -391,7 +391,8 @@ void App_Init()
 	PWM_SetPWM(LED10_pwmtimer,LED10_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
 
 	Protocol_DMX_init(DMX_Adress,DMX_uart);
-	SSD1306_Init(hi2c_display);  // initialise
+	//SSD1306_Init(hi2c_display);  // initialise
+	SSD1306_Init();  // initialise
 
 	Bp_Up = BP_OFF;
 	Bp_Down = BP_OFF;
