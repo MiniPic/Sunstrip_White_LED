@@ -646,7 +646,9 @@ void ssd1306_I2C_Write(uint8_t address, uint8_t reg, uint8_t data) {
 //Generated I2C
 #ifdef GENERATED_I2C
 void ssd1306_I2C_Init() {
-	//DWT_Delay_Init ();
+	uint32_t p = 250000;
+		while(p>0)
+			p--;
 }
 
 void ssd1306_I2C_WriteMulti(uint8_t address, uint8_t reg, uint8_t* data, uint16_t count) {
@@ -655,7 +657,7 @@ void ssd1306_I2C_WriteMulti(uint8_t address, uint8_t reg, uint8_t* data, uint16_
 	uint8_t i;
 	for(i = 0; i < count; i++)
 		dt[i+1] = data[i];
-	//HAL_I2C_Master_Transmit(ssd1306_i2c, address, dt, count+1, 10);
+	GENE_I2C_Master_Transmit(address, dt, count+1);
 }
 
 
@@ -663,13 +665,7 @@ void ssd1306_I2C_Write(uint8_t address, uint8_t reg, uint8_t data) {
 	uint8_t dt[2];
 	dt[0] = reg;
 	dt[1] = data;
-	//HAL_I2C_Master_Transmit(ssd1306_i2c, address, dt, 2, 10);
+	GENE_I2C_Master_Transmit(address, dt, 2);
 }
-
-void _Master_Generated_I2C(uint8_t reg, uint8_t* data, uint16_t count)
-{
-	//HAL_GPIO_WritePin(GPIOB, SCL_IO_Pin|SDA_IO_Pin, GPIO_PIN_SET);
-}
-
 
 #endif

@@ -19,6 +19,7 @@
 "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o"
 "Drivers/System/Flash_Manager.o"
 "Middlewares/Protocol/DMX/DMX.o"
+"Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.o"
 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o"
 "Middlewares/Third_Party/FreeRTOS/Source/croutine.o"
 "Middlewares/Third_Party/FreeRTOS/Source/event_groups.o"

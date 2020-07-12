@@ -26,7 +26,8 @@ Drivers/Devices/Display/ssd1306.o: ../Drivers/Devices/Display/ssd1306.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Drivers/Devices/Display/__Fonts.h
+ ../Drivers/Devices/Display/__Fonts.h \
+ ../Drivers/Devices/Display/../../../Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.h
 
 ../Drivers/Devices/Display/ssd1306.h:
 
@@ -83,3 +84,5 @@ Drivers/Devices/Display/ssd1306.o: ../Drivers/Devices/Display/ssd1306.c \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
 ../Drivers/Devices/Display/__Fonts.h:
+
+../Drivers/Devices/Display/../../../Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.h:

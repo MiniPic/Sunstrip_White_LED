@@ -34,6 +34,9 @@ SCL        |PB6          |Serial clock line
 SDA        |PB7          |Serial data line
  */
 
+/* I2C Mode */
+#define GENERATED_I2C			//Comment if not I2C generated
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
 
@@ -42,10 +45,12 @@ SDA        |PB7          |Serial data line
 #include "stdlib.h"
 #include "string.h"
 
+#ifdef GENERATED_I2C
+#include "../../../Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.h"
+#endif
+
 
 /* Definitions ------------------------------------------------------------------*/
-/* I2C Mode */
-#define GENERATED_I2C			//Comment if not I2C generated
 
 /* I2C address */
 #ifndef SSD1306_I2C_ADDR

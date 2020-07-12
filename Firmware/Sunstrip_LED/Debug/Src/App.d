@@ -27,6 +27,7 @@ Src/App.o: ../Src/App.c ../Src/../Middlewares/Protocol/DMX/DMX.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Src/../Drivers/Devices/Display/ssd1306.h \
  ../Src/../Drivers/Devices/Display/__Fonts.h \
+ ../Src/../Drivers/Devices/Display/../../../Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.h \
  ../Src/../Drivers/System/Flash_Manager.h \
  ../Src/../Drivers/Devices/PWM/PWM.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
@@ -105,6 +106,8 @@ Src/App.o: ../Src/App.c ../Src/../Middlewares/Protocol/DMX/DMX.h \
 ../Src/../Drivers/Devices/Display/ssd1306.h:
 
 ../Src/../Drivers/Devices/Display/__Fonts.h:
+
+../Src/../Drivers/Devices/Display/../../../Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.h:
 
 ../Src/../Drivers/System/Flash_Manager.h:
 

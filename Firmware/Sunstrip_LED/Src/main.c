@@ -99,6 +99,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  GENE_I2C_Init(GPIOB, SDA_IO_Pin, GPIOB, SCL_IO_Pin);
 
   DMX_uart = &huart2;
 

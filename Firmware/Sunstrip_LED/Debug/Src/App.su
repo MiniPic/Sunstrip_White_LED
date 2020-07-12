@@ -1,0 +1,9 @@
+App.c:76:9:Load_Param	16	static
+App.c:97:9:Write_Param	16	static
+App.c:109:6:Update_Display	24	static
+App.c:168:6:Manage_Button	8	static
+App.c:232:6:AppLEDTask	24	static
+App.c:259:6:AppIHMTask	32	static
+App.c:376:6:App_Init	8	static
+App.c:404:6:CreatAppTasks	72	static
+App.c:414:1:HAL_UART_RxCpltCallback	16	static
