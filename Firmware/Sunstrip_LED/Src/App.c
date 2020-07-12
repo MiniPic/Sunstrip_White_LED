@@ -30,8 +30,8 @@
 #define		LED_PWM_PERIOD_VALUE		255
 #define		TIMOUT_DMX_SIGNAL			3000			//in ms
 
-#define		TASK_DELAY_LED				50
-#define		TASK_DELAY_IHM				50
+#define		TASK_DELAY_LED				1
+#define		TASK_DELAY_IHM				5
 #define		REFRESH_DISPLAY				5				//5*TASK_DELAY_IHM
 
 #define 	DELAY_SAVE_PARAM			5000			//in ms
@@ -51,6 +51,14 @@ typedef enum {	MODE_OFF = 0x00,
 				MODE_MANU = 0x02
 }App_Mode;
 
+typedef enum {	DISP_PARAM= 0x00,
+				DISP_CONFIG_MODE = 0x01,
+				DISP_CONFIG_INVERT = 0x02,
+				DISP_CONFIG_ADDRESS = 0x03,
+				DISP_CONFIG_MANVALUE = 0x04
+}Display_Mode_t;
+
+
 typedef enum {	BP_OFF,
 				BP_CLICK,
 				BP_1s,
@@ -63,10 +71,13 @@ osThreadId 			AppIHMTaskHandle;
 
 uint16_t			DMX_Adress;
 
-uint8_t				DMX_values[10];
+uint8_t				DMX_values[12];
 uint8_t				Manu_value;
 uint8_t				DMX_signal_OK;
 App_Mode			Current_Mode;
+uint8_t				IsInverted;
+Display_Mode_t		Current_Display;
+uint8_t				Display_Cursor;
 
 BP_Status 			Bp_Up;
 BP_Status 			Bp_Down;
@@ -115,12 +126,79 @@ void Update_Display()
 
     SSD1306_Clear();
 
-    if(Current_Mode == MODE_OFF)			//OFF
+    if(Current_Display == DISP_PARAM)
+    {
+    	//CURSOR
+    	SSD1306_DrawFilledTriangle(0, 11*Display_Cursor, 0, 11*Display_Cursor + 8, 7, 11*Display_Cursor + 4, 1);
+
+    	//MODE
+    	SSD1306_GotoXY (10,0);
+    	SSD1306_Puts ("MODE: ", &Font_7x10, 1);
+    	SSD1306_GotoXY (80,0);
+    	if(Current_Mode == MODE_OFF)
+    		SSD1306_Puts ("OFF", &Font_7x10, 1);
+    	if(Current_Mode == MODE_MANU)
+    		SSD1306_Puts ("MANU", &Font_7x10, 1);
+    	if(Current_Mode == MODE_DMX)
+    	    SSD1306_Puts ("DMX", &Font_7x10, 1);
+
+    	//INVERT
+    	SSD1306_GotoXY (10,11);
+    	SSD1306_Puts ("INVERT: ", &Font_7x10, 1);
+    	SSD1306_GotoXY (80,11);
+		if(IsInverted)
+			SSD1306_Puts ("YES", &Font_7x10, 1);
+		else
+			SSD1306_Puts ("NO", &Font_7x10, 1);
+
+    	//ADRESS DMX
+    	SSD1306_GotoXY (10,22);
+    	SSD1306_Puts ("ADDRESS: ", &Font_7x10, 1);
+    	SSD1306_GotoXY (80,22);
+    	sprintf(Str_add,"%03d",DMX_Adress);
+    	SSD1306_Puts (Str_add, &Font_7x10, 1);
+
+    	//MAN VALUE
+    	SSD1306_GotoXY (10,33);
+    	SSD1306_Puts ("MAN VALUE: ", &Font_7x10, 1);
+    	SSD1306_GotoXY (80,33);
+		sprintf(Str_add,"%03d",Manu_value);
+		SSD1306_Puts (Str_add, &Font_7x10, 1);
+    }
+    else if(Current_Display == DISP_CONFIG_MODE)
     {
     	SSD1306_GotoXY (40,0);
-    	SSD1306_Puts ("OFF", &Font_16x26, 1);
+
+    	switch(Current_Mode)
+		{
+		case MODE_OFF:
+			SSD1306_Puts ("OFF", &Font_16x26, 1);
+			break;
+		case MODE_MANU:
+			SSD1306_Puts ("MANU", &Font_16x26, 1);
+			break;
+		case MODE_DMX:
+			SSD1306_Puts ("DMX", &Font_16x26, 1);
+			break;
+		default:
+			break;
+		}
     }
-    else if(Current_Mode == MODE_MANU)		//MANU
+    else if(Current_Display == DISP_CONFIG_INVERT)
+	{
+
+    	if(IsInverted)
+    	{
+    		SSD1306_GotoXY (40,0);
+    		SSD1306_Puts ("YES", &Font_16x26, 1);
+    	}
+    	else
+    	{
+    		SSD1306_GotoXY (48,0);
+    		SSD1306_Puts ("NO", &Font_16x26, 1);
+    	}
+	}
+    else if(Current_Display == DISP_CONFIG_MANVALUE)		//MANU
     {
     	percent_value = Manu_value;
     	sprintf(Str_percent,"%03d",percent_value);
@@ -131,7 +209,7 @@ void Update_Display()
     	SSD1306_GotoXY (0, 45);
     	SSD1306_Puts ("MODE:MANUAL", &Font_11x18, 1);
     }
-    else								//DMX
+    else if (Current_Display == DISP_CONFIG_ADDRESS)		//DMX
     {
     	percent_value = (DMX_values[0]*100/255);
     	sprintf(Str_add,"%03d",DMX_Adress);
@@ -275,56 +353,68 @@ void AppIHMTask(void const * argument)
 
 		Manage_Button();
 
-		if(Bp_Ok == BP_CLICK)
-		{
-			if(Current_Mode==MODE_OFF)
-				Current_Mode=MODE_MANU;
-			else if(Current_Mode==MODE_MANU)
-				Current_Mode=MODE_DMX;
-			else
-				Current_Mode=MODE_OFF;
-
-			param_changed = __TRUE;
-			tick_save_param = HAL_GetTick();
-		}
-
-		if(Current_Mode==MODE_MANU)
+		if(Current_Display == DISP_PARAM)
 		{
 			if(Bp_Up == BP_CLICK)
 			{
-				if(Manu_value<100)
-					Manu_value++;
-				param_changed = __TRUE;
-				tick_save_param = HAL_GetTick();
-			}
-			if(Bp_Up == BP_1s)
-			{
-				if(Manu_value<=90)
-					Manu_value+=10;
+				if(Display_Cursor == 3)
+					Display_Cursor = 0;
 				else
-					Manu_value=100;
-				param_changed = __TRUE;
-				tick_save_param = HAL_GetTick();
+					Display_Cursor++;
 			}
 			if(Bp_Down == BP_CLICK)
 			{
-				if(Manu_value>0)
-					Manu_value--;
-				param_changed = __TRUE;
-				tick_save_param = HAL_GetTick();
-			}
-			if(Bp_Down == BP_1s)
-			{
-				if(Manu_value>=10)
-					Manu_value-=10;
+				if(Display_Cursor == 0)
+					Display_Cursor = 3;
 				else
-					Manu_value=0;
-				param_changed = __TRUE;
-				tick_save_param = HAL_GetTick();
+					Display_Cursor--;
+			}
+			if(Bp_Ok == BP_CLICK)
+			{
+				switch(Display_Cursor)
+				{
+				case 0:
+					Current_Display = DISP_CONFIG_MODE;
+					break;
+				case 1:
+					Current_Display = DISP_CONFIG_INVERT;
+					break;
+				case 2:
+					Current_Display = DISP_CONFIG_ADDRESS;
+					break;
+				case 3:
+					Current_Display = DISP_CONFIG_MANVALUE;
+					break;
+				default:
+					break;
+				}
 			}
 		}
 
-		if(Current_Mode==MODE_DMX)
+		else if(Current_Display == DISP_CONFIG_MODE)
+		{
+			if(Bp_Up == BP_CLICK)
+			{
+				if(Current_Mode == 2)
+					Current_Mode = 0;
+				else
+					Current_Mode++;
+			}
+			if(Bp_Down == BP_CLICK)
+			{
+				if(Current_Mode == 0)
+					Current_Mode = 2;
+				else
+					Current_Mode--;
+			}
+
+			if(Bp_Ok == BP_CLICK)
+			{
+				Current_Display = DISP_PARAM;
+			}
+		}
+
+		else if(Current_Display == DISP_CONFIG_ADDRESS)
 		{
 			if(Bp_Up == BP_CLICK)
 			{
@@ -362,6 +452,65 @@ void AppIHMTask(void const * argument)
 				tick_save_param = HAL_GetTick();
 				Protocol_DMX_init(DMX_Adress,DMX_uart);
 			}
+			if(Bp_Ok == BP_CLICK)
+			{
+				Current_Display = DISP_PARAM;
+			}
+		}
+
+		else if(Current_Display==DISP_CONFIG_MANVALUE)
+		{
+			if(Bp_Up == BP_CLICK)
+			{
+				if(Manu_value<100)
+					Manu_value++;
+				param_changed = __TRUE;
+				tick_save_param = HAL_GetTick();
+			}
+			if(Bp_Up == BP_1s)
+			{
+				if(Manu_value<=90)
+					Manu_value+=10;
+				else
+					Manu_value=100;
+				param_changed = __TRUE;
+				tick_save_param = HAL_GetTick();
+			}
+			if(Bp_Down == BP_CLICK)
+			{
+				if(Manu_value>0)
+					Manu_value--;
+				param_changed = __TRUE;
+				tick_save_param = HAL_GetTick();
+			}
+			if(Bp_Down == BP_1s)
+			{
+				if(Manu_value>=10)
+					Manu_value-=10;
+				else
+					Manu_value=0;
+				param_changed = __TRUE;
+				tick_save_param = HAL_GetTick();
+			}
+			if(Bp_Ok == BP_CLICK)
+			{
+				Current_Display = DISP_PARAM;
+			}
+		}
+
+		else if(Current_Display==DISP_CONFIG_INVERT)
+		{
+			if(Bp_Up == BP_CLICK || Bp_Down == BP_CLICK)
+			{
+				if(IsInverted)
+					IsInverted = __FALSE;
+				else
+					IsInverted = __TRUE;
+			}
+			if(Bp_Ok == BP_CLICK)
+			{
+				Current_Display = DISP_PARAM;
+			}
 		}
 
 		if(HAL_GetTick()>tick_save_param+DELAY_SAVE_PARAM && param_changed==__TRUE)
@@ -376,6 +525,8 @@ void AppIHMTask(void const * argument)
 void App_Init()
 {
 	Load_Param();
+	Current_Display = DISP_PARAM;
+	Display_Cursor = 0;
 
 	DMX_signal_OK = __FALSE;
 
