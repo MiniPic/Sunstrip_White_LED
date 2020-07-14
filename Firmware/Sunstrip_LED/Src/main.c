@@ -104,13 +104,13 @@ int main(void)
   DMX_uart = &huart2;
 
   LED1_pwmtimer = &htim1;
-  LED1_PWMchannel = TIM_CHANNEL_1;
+  LED1_PWMchannel = TIM_CHANNEL_4;
   LED2_pwmtimer = &htim1;
-  LED2_PWMchannel = TIM_CHANNEL_2;
+  LED2_PWMchannel = TIM_CHANNEL_3;
   LED3_pwmtimer = &htim1;
-  LED3_PWMchannel = TIM_CHANNEL_3;
+  LED3_PWMchannel = TIM_CHANNEL_2;
   LED4_pwmtimer = &htim1;
-  LED4_PWMchannel = TIM_CHANNEL_4;
+  LED4_PWMchannel = TIM_CHANNEL_1;
   LED5_pwmtimer = &htim2;
   LED5_PWMchannel = TIM_CHANNEL_1;
   LED6_pwmtimer = &htim2;

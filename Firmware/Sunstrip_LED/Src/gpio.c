@@ -52,10 +52,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, LED_V_Pin|RE_DE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(SCL_IO_GPIO_Port, SCL_IO_Pin, GPIO_PIN_SET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(SDA_IO_GPIO_Port, SDA_IO_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, SCL_IO_Pin|SDA_IO_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : PCPin PCPin */
   GPIO_InitStruct.Pin = LED_V_Pin|RE_DE_Pin;

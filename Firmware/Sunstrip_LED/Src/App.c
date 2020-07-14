@@ -30,13 +30,13 @@
 #define		LED_PWM_PERIOD_VALUE		255
 #define		TIMOUT_DMX_SIGNAL			3000			//in ms
 
-#define		TASK_DELAY_LED				1
-#define		TASK_DELAY_IHM				5
+#define		TASK_DELAY_LED				10
+#define		TASK_DELAY_IHM				50
 #define		REFRESH_DISPLAY				5				//5*TASK_DELAY_IHM
 
-#define 	DELAY_SAVE_PARAM			5000			//in ms
+#define 	DELAY_SAVE_PARAM			500			    //in tick
 
-#define		TIME_LONG_BP				500
+#define		TIME_LONG_BP				50				//in tick
 
 #define		__TRUE						0x01
 #define 	__FALSE						0x00
@@ -91,7 +91,8 @@ uint8_t Load_Param()
 	if(ParamExist())
 	{
 		val_param = 	FlashManager_ReadInt32(PARAM_DMX_PARAM);
-		Current_Mode = 	(val_param&0xFF000000)>>24;
+		IsInverted = 	(val_param&0xF0000000)>>28;
+		Current_Mode = 	(val_param&0x0F000000)>>24;
 		Manu_value = 	(val_param&0x00FF0000)>>16;
 		DMX_Adress = 	(val_param&0x0000FFFF);
 		return __TRUE;
@@ -99,22 +100,26 @@ uint8_t Load_Param()
 	else
 	{
 		Current_Mode = MODE_OFF;
+		IsInverted = __FALSE;
 		Manu_value = 100;
 		DMX_Adress = 1;
 		return __FALSE;
 	}
 }
 
-uint8_t Write_Param()
+void Write_Param()
 {
 	uint32_t data[2];
 	data[0] = PARAM_EXIST_CODE;
 	data[1] = 0x00;
+	data[1] |= (IsInverted<<28);
 	data[1] |= (Current_Mode<<24);
 	data[1] |= (Manu_value<<16);
 	data[1] |= (DMX_Adress);
 
 	FlashManager_WriteMulti(PARAM_EXIST_ADDRESS,2,data);
+
+//	Display_Cursor=0;
 }
 
 void Update_Display()
@@ -309,11 +314,16 @@ void Manage_Button()
 
 void AppLEDTask(void const * argument)
 {
+	static uint8_t A;
 	for(;;)
 	{
-		osDelay(TASK_DELAY_LED);
+		osDelay(1000);//(TASK_DELAY_LED);
 
-		if(Current_Mode == MODE_OFF)
+		A++;
+		if(A>=10)
+			A=0;
+
+		/*if(Current_Mode == MODE_OFF)
 			PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);
 		else if(Current_Mode == MODE_MANU)
 			PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Manu_value*255/100);
@@ -330,6 +340,170 @@ void AppLEDTask(void const * argument)
 				DMX_signal_OK = __TRUE;
 			}
 			PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)DMX_values[0]);
+		}*/
+
+		switch(A)
+		{
+			case 0:
+				SSD1306_Clear();
+				SSD1306_GotoXY (40,0);
+				    		SSD1306_Puts ("1", &Font_16x26, 1);
+				    		SSD1306_UpdateScreen(); //display
+					PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,10);		//PWM Off
+					PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 1:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("2", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 2:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("3", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 3:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("4", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 4:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("5", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 5:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("6", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 6:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("7", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+					PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 7:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("8", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 8:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("9", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,10);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+					break;
+			case 9:
+				SSD1306_Clear();
+								SSD1306_GotoXY (40,0);
+								    		SSD1306_Puts ("10", &Font_16x26, 1);
+								    		SSD1306_UpdateScreen(); //display
+								    		PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+								    		PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,10);		//PWM Off
+					break;
 		}
 	}
 }
@@ -347,7 +521,7 @@ void AppIHMTask(void const * argument)
 		cpt_refresh++;
 		if(cpt_refresh>=REFRESH_DISPLAY)
 		{
-			Update_Display();
+			//Update_Display();
 			cpt_refresh=0;
 		}
 
@@ -395,6 +569,8 @@ void AppIHMTask(void const * argument)
 		{
 			if(Bp_Up == BP_CLICK)
 			{
+				param_changed=__TRUE;
+				tick_save_param = HAL_GetTick();
 				if(Current_Mode == 2)
 					Current_Mode = 0;
 				else
@@ -402,6 +578,8 @@ void AppIHMTask(void const * argument)
 			}
 			if(Bp_Down == BP_CLICK)
 			{
+				param_changed=__TRUE;
+				tick_save_param = HAL_GetTick();
 				if(Current_Mode == 0)
 					Current_Mode = 2;
 				else
@@ -502,6 +680,8 @@ void AppIHMTask(void const * argument)
 		{
 			if(Bp_Up == BP_CLICK || Bp_Down == BP_CLICK)
 			{
+				param_changed=__TRUE;
+				tick_save_param = HAL_GetTick();
 				if(IsInverted)
 					IsInverted = __FALSE;
 				else
@@ -513,7 +693,7 @@ void AppIHMTask(void const * argument)
 			}
 		}
 
-		if(HAL_GetTick()>tick_save_param+DELAY_SAVE_PARAM && param_changed==__TRUE)
+		if(HAL_GetTick()>(tick_save_param+DELAY_SAVE_PARAM) && param_changed==__TRUE)
 		{
 			param_changed = __FALSE;
 			Write_Param();
@@ -530,16 +710,39 @@ void App_Init()
 
 	DMX_signal_OK = __FALSE;
 
-	PWM_SetPWM(LED1_pwmtimer,LED1_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED2_pwmtimer,LED2_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED3_pwmtimer,LED3_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED4_pwmtimer,LED4_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED5_pwmtimer,LED5_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED6_pwmtimer,LED6_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED7_pwmtimer,LED7_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED8_pwmtimer,LED8_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off
-	PWM_SetPWM(LED9_pwmtimer,LED9_PWMchannel,LED_PWM_PERIOD_VALUE,0);		//PWM Off*/
-	PWM_SetPWM(LED10_pwmtimer,LED10_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED1_pwmtimer,LED1_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED2_pwmtimer,LED2_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED3_pwmtimer,LED3_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED4_pwmtimer,LED4_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED5_pwmtimer,LED5_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED6_pwmtimer,LED6_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED7_pwmtimer,LED7_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED8_pwmtimer,LED8_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED9_pwmtimer,LED9_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+	//PWM_SetPWM(LED10_pwmtimer,LED10_PWMchannel,LED_PWM_PERIOD_VALUE,10);		//PWM Off
+
+	HAL_TIM_PWM_Start( LED1_pwmtimer, LED1_PWMchannel );
+	HAL_TIM_PWM_Start( LED2_pwmtimer, LED2_PWMchannel );
+	HAL_TIM_PWM_Start( LED3_pwmtimer, LED3_PWMchannel );
+	HAL_TIM_PWM_Start( LED4_pwmtimer, LED4_PWMchannel );
+	HAL_TIM_PWM_Start( LED5_pwmtimer, LED5_PWMchannel );
+	HAL_TIM_PWM_Start( LED6_pwmtimer, LED6_PWMchannel );
+	HAL_TIM_PWM_Start( LED7_pwmtimer, LED7_PWMchannel );
+	HAL_TIM_PWM_Start( LED8_pwmtimer, LED8_PWMchannel );
+	HAL_TIM_PWM_Start( LED9_pwmtimer, LED9_PWMchannel );
+	HAL_TIM_PWM_Start( LED10_pwmtimer, LED10_PWMchannel );
+
+	PWM_SetDuty(LED1_pwmtimer,LED1_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED2_pwmtimer,LED2_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED3_pwmtimer,LED3_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED4_pwmtimer,LED4_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED5_pwmtimer,LED5_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED6_pwmtimer,LED6_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED7_pwmtimer,LED7_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED8_pwmtimer,LED8_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED9_pwmtimer,LED9_PWMchannel,0);		//PWM Off
+	PWM_SetDuty(LED10_pwmtimer,LED10_PWMchannel,0);		//PWM Off
+
 
 	Protocol_DMX_init(DMX_Adress,DMX_uart);
 	//SSD1306_Init(hi2c_display);  // initialise
@@ -554,7 +757,7 @@ void App_Init()
 
 void CreatAppTasks (void)
 {
-	osThreadDef(App_LED_Task, AppLEDTask, osPriorityHigh, 0, 128);
+	osThreadDef(App_LED_Task, AppLEDTask, osPriorityHigh, 0, 256);
 	AppLEDTaskHandle = osThreadCreate(osThread(App_LED_Task), NULL);
 
 	osThreadDef(App_IHM_Task, AppIHMTask, osPriorityNormal, 0, 256);
@@ -562,7 +765,7 @@ void CreatAppTasks (void)
 }
 
 
-HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	Protocol_DMX_UartCallback(huart);
 }
