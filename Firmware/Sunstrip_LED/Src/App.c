@@ -42,7 +42,7 @@
 #define 	__FALSE						0x00
 
 #define 	MIN_LED_PWM_VALUE			0
-#define 	MAX_LED_PWM_VALUE			233
+#define 	MAX_LED_PWM_VALUE			215
 
 
 /* Types Definitions ---------------------------------------------------------*/

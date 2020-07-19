@@ -11225,7 +11225,7 @@ void PWM_SetDutyAdapt(TIM_HandleTypeDef* timer, uint32_t channel, uint16_t power
 		value_pulse = 0;
  8003f00:	2300      	movs	r3, #0
  8003f02:	617b      	str	r3, [r7, #20]
- 8003f04:	e011      	b.n	8003f2a <PWM_SetDutyAdapt+0x3e>
+ 8003f04:	e010      	b.n	8003f28 <PWM_SetDutyAdapt+0x3c>
 	else
 	{
 		value_pulse = ((254*power)/(MAX_LED_PWM_VALUE-MIN_LED_PWM_VALUE))+MIN_LED_PWM_VALUE;
@@ -11236,62 +11236,62 @@ void PWM_SetDutyAdapt(TIM_HandleTypeDef* timer, uint32_t channel, uint16_t power
  8003f0e:	005b      	lsls	r3, r3, #1
  8003f10:	4a16      	ldr	r2, [pc, #88]	; (8003f6c <PWM_SetDutyAdapt+0x80>)
  8003f12:	fb82 1203 	smull	r1, r2, r2, r3
- 8003f16:	441a      	add	r2, r3
- 8003f18:	11d2      	asrs	r2, r2, #7
- 8003f1a:	17db      	asrs	r3, r3, #31
- 8003f1c:	1ad3      	subs	r3, r2, r3
- 8003f1e:	617b      	str	r3, [r7, #20]
+ 8003f16:	1192      	asrs	r2, r2, #6
+ 8003f18:	17db      	asrs	r3, r3, #31
+ 8003f1a:	1ad3      	subs	r3, r2, r3
+ 8003f1c:	617b      	str	r3, [r7, #20]
 		if(value_pulse > MAX_LED_PWM_VALUE)
- 8003f20:	697b      	ldr	r3, [r7, #20]
- 8003f22:	2be9      	cmp	r3, #233	; 0xe9
- 8003f24:	d901      	bls.n	8003f2a <PWM_SetDutyAdapt+0x3e>
+ 8003f1e:	697b      	ldr	r3, [r7, #20]
+ 8003f20:	2bd7      	cmp	r3, #215	; 0xd7
+ 8003f22:	d901      	bls.n	8003f28 <PWM_SetDutyAdapt+0x3c>
 			value_pulse = MAX_LED_PWM_VALUE;
- 8003f26:	23e9      	movs	r3, #233	; 0xe9
- 8003f28:	617b      	str	r3, [r7, #20]
+ 8003f24:	23d7      	movs	r3, #215	; 0xd7
+ 8003f26:	617b      	str	r3, [r7, #20]
 	}
 
 	 __HAL_TIM_SET_COMPARE(timer, channel, value_pulse);
- 8003f2a:	68bb      	ldr	r3, [r7, #8]
- 8003f2c:	2b00      	cmp	r3, #0
- 8003f2e:	d104      	bne.n	8003f3a <PWM_SetDutyAdapt+0x4e>
- 8003f30:	68fb      	ldr	r3, [r7, #12]
- 8003f32:	681b      	ldr	r3, [r3, #0]
- 8003f34:	697a      	ldr	r2, [r7, #20]
- 8003f36:	635a      	str	r2, [r3, #52]	; 0x34
+ 8003f28:	68bb      	ldr	r3, [r7, #8]
+ 8003f2a:	2b00      	cmp	r3, #0
+ 8003f2c:	d104      	bne.n	8003f38 <PWM_SetDutyAdapt+0x4c>
+ 8003f2e:	68fb      	ldr	r3, [r7, #12]
+ 8003f30:	681b      	ldr	r3, [r3, #0]
+ 8003f32:	697a      	ldr	r2, [r7, #20]
+ 8003f34:	635a      	str	r2, [r3, #52]	; 0x34
 }
- 8003f38:	e013      	b.n	8003f62 <PWM_SetDutyAdapt+0x76>
+ 8003f36:	e013      	b.n	8003f60 <PWM_SetDutyAdapt+0x74>
 	 __HAL_TIM_SET_COMPARE(timer, channel, value_pulse);
- 8003f3a:	68bb      	ldr	r3, [r7, #8]
- 8003f3c:	2b04      	cmp	r3, #4
- 8003f3e:	d104      	bne.n	8003f4a <PWM_SetDutyAdapt+0x5e>
- 8003f40:	68fb      	ldr	r3, [r7, #12]
- 8003f42:	681b      	ldr	r3, [r3, #0]
- 8003f44:	697a      	ldr	r2, [r7, #20]
- 8003f46:	639a      	str	r2, [r3, #56]	; 0x38
+ 8003f38:	68bb      	ldr	r3, [r7, #8]
+ 8003f3a:	2b04      	cmp	r3, #4
+ 8003f3c:	d104      	bne.n	8003f48 <PWM_SetDutyAdapt+0x5c>
+ 8003f3e:	68fb      	ldr	r3, [r7, #12]
+ 8003f40:	681b      	ldr	r3, [r3, #0]
+ 8003f42:	697a      	ldr	r2, [r7, #20]
+ 8003f44:	639a      	str	r2, [r3, #56]	; 0x38
 }
- 8003f48:	e00b      	b.n	8003f62 <PWM_SetDutyAdapt+0x76>
+ 8003f46:	e00b      	b.n	8003f60 <PWM_SetDutyAdapt+0x74>
 	 __HAL_TIM_SET_COMPARE(timer, channel, value_pulse);
- 8003f4a:	68bb      	ldr	r3, [r7, #8]
- 8003f4c:	2b08      	cmp	r3, #8
- 8003f4e:	d104      	bne.n	8003f5a <PWM_SetDutyAdapt+0x6e>
- 8003f50:	68fb      	ldr	r3, [r7, #12]
- 8003f52:	681b      	ldr	r3, [r3, #0]
- 8003f54:	697a      	ldr	r2, [r7, #20]
- 8003f56:	63da      	str	r2, [r3, #60]	; 0x3c
+ 8003f48:	68bb      	ldr	r3, [r7, #8]
+ 8003f4a:	2b08      	cmp	r3, #8
+ 8003f4c:	d104      	bne.n	8003f58 <PWM_SetDutyAdapt+0x6c>
+ 8003f4e:	68fb      	ldr	r3, [r7, #12]
+ 8003f50:	681b      	ldr	r3, [r3, #0]
+ 8003f52:	697a      	ldr	r2, [r7, #20]
+ 8003f54:	63da      	str	r2, [r3, #60]	; 0x3c
 }
- 8003f58:	e003      	b.n	8003f62 <PWM_SetDutyAdapt+0x76>
+ 8003f56:	e003      	b.n	8003f60 <PWM_SetDutyAdapt+0x74>
 	 __HAL_TIM_SET_COMPARE(timer, channel, value_pulse);
- 8003f5a:	68fb      	ldr	r3, [r7, #12]
- 8003f5c:	681b      	ldr	r3, [r3, #0]
- 8003f5e:	697a      	ldr	r2, [r7, #20]
- 8003f60:	641a      	str	r2, [r3, #64]	; 0x40
+ 8003f58:	68fb      	ldr	r3, [r7, #12]
+ 8003f5a:	681b      	ldr	r3, [r3, #0]
+ 8003f5c:	697a      	ldr	r2, [r7, #20]
+ 8003f5e:	641a      	str	r2, [r3, #64]	; 0x40
 }
- 8003f62:	bf00      	nop
- 8003f64:	371c      	adds	r7, #28
- 8003f66:	46bd      	mov	sp, r7
- 8003f68:	bc80      	pop	{r7}
- 8003f6a:	4770      	bx	lr
- 8003f6c:	8ca29c05 	.word	0x8ca29c05
+ 8003f60:	bf00      	nop
+ 8003f62:	371c      	adds	r7, #28
+ 8003f64:	46bd      	mov	sp, r7
+ 8003f66:	bc80      	pop	{r7}
+ 8003f68:	4770      	bx	lr
+ 8003f6a:	bf00      	nop
+ 8003f6c:	4c346405 	.word	0x4c346405
 
 08003f70 <PatchPWMtoLED>:
 
