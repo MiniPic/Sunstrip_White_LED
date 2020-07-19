@@ -20,7 +20,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "cmsis_os.h"
 #include "adc.h"
 #include "tim.h"
 #include "usart.h"
@@ -54,7 +53,6 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -98,46 +96,18 @@ int main(void)
   MX_TIM3_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  GENE_I2C_Init(GPIOB, SDA_IO_Pin, GPIOB, SCL_IO_Pin);
 
   DMX_uart = &huart2;
 
-  LED1_pwmtimer = &htim1;
-  LED1_PWMchannel = TIM_CHANNEL_4;
-  LED2_pwmtimer = &htim1;
-  LED2_PWMchannel = TIM_CHANNEL_3;
-  LED3_pwmtimer = &htim1;
-  LED3_PWMchannel = TIM_CHANNEL_2;
-  LED4_pwmtimer = &htim1;
-  LED4_PWMchannel = TIM_CHANNEL_1;
-  LED5_pwmtimer = &htim2;
-  LED5_PWMchannel = TIM_CHANNEL_1;
-  LED6_pwmtimer = &htim2;
-  LED6_PWMchannel = TIM_CHANNEL_2;
-  LED7_pwmtimer = &htim2;
-  LED7_PWMchannel = TIM_CHANNEL_3;
-  LED8_pwmtimer = &htim2;
-  LED8_PWMchannel = TIM_CHANNEL_4;
-  LED9_pwmtimer = &htim3;
-  LED9_PWMchannel = TIM_CHANNEL_1;
-  LED10_pwmtimer = &htim3;
-  LED10_PWMchannel = TIM_CHANNEL_2;
-
-  FAN_pwmtimer = &htim3;
-  FAN_PWMchannel = TIM_CHANNEL_3;
+  Tick_Timer = &htim4;
 
   //hi2c_display = &hi2c1;
 
   App_Init();
   /* USER CODE END 2 */
 
-  /* Call init function for freertos objects (in freertos.c) */
-  MX_FREERTOS_Init(); 
-  /* Start scheduler */
-  osKernelStart();
- 
-  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
@@ -146,6 +116,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	App();
   }
   /* USER CODE END 3 */
 }

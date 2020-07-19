@@ -74,6 +74,8 @@ void Error_Handler(void);
 #define DMX_IN_GPIO_Port GPIOA
 #define CTN_Pin GPIO_PIN_7
 #define CTN_GPIO_Port GPIOA
+#define FAN_Pin GPIO_PIN_0
+#define FAN_GPIO_Port GPIOB
 #define VOLTAGE_Pin GPIO_PIN_1
 #define VOLTAGE_GPIO_Port GPIOB
 #define PWM7_Pin GPIO_PIN_10

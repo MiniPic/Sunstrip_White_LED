@@ -43,6 +43,9 @@ void Protocol_DMX_init(uint16_t address,UART_HandleTypeDef *ref_uart)
 {
 	uint8_t i;
 
+	//Disable UART
+	//HAL_UART_DeInit(dmx_ref_uart);
+
 	//init variables
 	dmx_Last_Error=DMX_NO_ERROR;
 	dmx_rx_buff[0]=0;
@@ -59,6 +62,12 @@ void Protocol_DMX_init(uint16_t address,UART_HandleTypeDef *ref_uart)
 	}
 
 	dmx_LastTick = HAL_GetTick();
+
+	//Enable UART
+	/*if (HAL_UART_Init(dmx_ref_uart) != HAL_OK)
+	{
+		Error_Handler();
+	}*/
 
 	/* Receive one byte in interrupt mode */
 	dmx_ref_uart = ref_uart;

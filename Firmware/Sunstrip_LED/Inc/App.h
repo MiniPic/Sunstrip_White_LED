@@ -39,9 +39,10 @@ uint32_t 			LED10_PWMchannel;
 TIM_HandleTypeDef* 	FAN_pwmtimer;
 uint32_t 			FAN_PWMchannel;
 
+TIM_HandleTypeDef*  Tick_Timer;
 
 //I2C_HandleTypeDef* 	hi2c_display;
 
 /* Public prototypes -----------------------------------------------*/
 void App_Init();
-void CreatAppTasks (void);
+void App();
