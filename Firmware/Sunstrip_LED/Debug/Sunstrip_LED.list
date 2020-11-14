@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_macro  00016c99  00000000  00000000  00037820  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0000fe05  00000000  00000000  0004e4b9  2**0
+ 17 .debug_line   0000fdf7  00000000  00000000  0004e4b9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    00078b16  00000000  00000000  0005e2be  2**0
+ 18 .debug_str    00078b16  00000000  00000000  0005e2b0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000d6dd4  2**0
+ 19 .comment      0000007b  00000000  00000000  000d6dc6  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000045b0  00000000  00000000  000d6e50  2**2
+ 20 .debug_frame  000045b0  00000000  00000000  000d6e44  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -12052,8 +12052,8 @@ void Manage_Button()
 	static uint32_t time_BpOk=0;
 
 	//UP
-	if(!HAL_GPIO_ReadPin(T1_GPIO_Port, T1_Pin))
- 80044d4:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+	if(!HAL_GPIO_ReadPin(T3_GPIO_Port, T3_Pin))
+ 80044d4:	f44f 5100 	mov.w	r1, #8192	; 0x2000
  80044d8:	484a      	ldr	r0, [pc, #296]	; (8004604 <Manage_Button+0x134>)
  80044da:	f7fd f9ef 	bl	80018bc <HAL_GPIO_ReadPin>
  80044de:	4603      	mov	r3, r0
@@ -12115,8 +12115,8 @@ void Manage_Button()
  8004536:	701a      	strb	r2, [r3, #0]
 
 	//DOWN
-	if(!HAL_GPIO_ReadPin(T3_GPIO_Port, T3_Pin))
- 8004538:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+	if(!HAL_GPIO_ReadPin(T1_GPIO_Port, T1_Pin))
+ 8004538:	f44f 4180 	mov.w	r1, #16384	; 0x4000
  800453c:	4834      	ldr	r0, [pc, #208]	; (8004610 <Manage_Button+0x140>)
  800453e:	f7fd f9bd 	bl	80018bc <HAL_GPIO_ReadPin>
  8004542:	4603      	mov	r3, r0
@@ -12180,7 +12180,7 @@ void Manage_Button()
 	//OK
 	if(!HAL_GPIO_ReadPin(T2_GPIO_Port, T2_Pin))
  800459c:	f44f 5180 	mov.w	r1, #4096	; 0x1000
- 80045a0:	481b      	ldr	r0, [pc, #108]	; (8004610 <Manage_Button+0x140>)
+ 80045a0:	4818      	ldr	r0, [pc, #96]	; (8004604 <Manage_Button+0x134>)
  80045a2:	f7fd f98b 	bl	80018bc <HAL_GPIO_ReadPin>
  80045a6:	4603      	mov	r3, r0
  80045a8:	2b00      	cmp	r3, #0
@@ -12244,10 +12244,10 @@ void Manage_Button()
 }
  8004600:	bf00      	nop
  8004602:	bd80      	pop	{r7, pc}
- 8004604:	40011000 	.word	0x40011000
+ 8004604:	40010c00 	.word	0x40010c00
  8004608:	200009d0 	.word	0x200009d0
  800460c:	200004b0 	.word	0x200004b0
- 8004610:	40010c00 	.word	0x40010c00
+ 8004610:	40011000 	.word	0x40011000
  8004614:	20000980 	.word	0x20000980
  8004618:	200004b4 	.word	0x200004b4
  800461c:	200009b8 	.word	0x200009b8
@@ -12284,7 +12284,7 @@ void AppLEDTask()
  8004642:	4bb2      	ldr	r3, [pc, #712]	; (800490c <AppLEDTask+0x2e8>)
  8004644:	781b      	ldrb	r3, [r3, #0]
  8004646:	2b00      	cmp	r3, #0
- 8004648:	d128      	bne.n	800469c <AppLEDTask+0x78>
+ 8004648:	d127      	bne.n	800469a <AppLEDTask+0x76>
 	{
 		Current_Value[0]=0;
  800464a:	4bae      	ldr	r3, [pc, #696]	; (8004904 <AppLEDTask+0x2e0>)
@@ -12339,339 +12339,351 @@ void AppLEDTask()
  8004692:	4ba1      	ldr	r3, [pc, #644]	; (8004918 <AppLEDTask+0x2f4>)
  8004694:	2200      	movs	r2, #0
  8004696:	701a      	strb	r2, [r3, #0]
-			PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
-			cpt_strob=0;
-		}
-
+ 8004698:	e1d3      	b.n	8004a42 <AppLEDTask+0x41e>
 	}
-}
- 8004698:	f000 bc72 	b.w	8004f80 <AppLEDTask+0x95c>
 	else if(Current_Mode == MODE_MANU)
- 800469c:	4b9b      	ldr	r3, [pc, #620]	; (800490c <AppLEDTask+0x2e8>)
- 800469e:	781b      	ldrb	r3, [r3, #0]
- 80046a0:	2b02      	cmp	r3, #2
- 80046a2:	f040 80a0 	bne.w	80047e6 <AppLEDTask+0x1c2>
+ 800469a:	4b9c      	ldr	r3, [pc, #624]	; (800490c <AppLEDTask+0x2e8>)
+ 800469c:	781b      	ldrb	r3, [r3, #0]
+ 800469e:	2b02      	cmp	r3, #2
+ 80046a0:	f040 80a0 	bne.w	80047e4 <AppLEDTask+0x1c0>
+	{
 		Current_Value[0]=(uint32_t)(Manu_value*255/100);
- 80046a6:	4b9d      	ldr	r3, [pc, #628]	; (800491c <AppLEDTask+0x2f8>)
- 80046a8:	781b      	ldrb	r3, [r3, #0]
- 80046aa:	461a      	mov	r2, r3
- 80046ac:	4613      	mov	r3, r2
- 80046ae:	021b      	lsls	r3, r3, #8
- 80046b0:	1a9b      	subs	r3, r3, r2
- 80046b2:	4a9b      	ldr	r2, [pc, #620]	; (8004920 <AppLEDTask+0x2fc>)
- 80046b4:	fb82 1203 	smull	r1, r2, r2, r3
- 80046b8:	1152      	asrs	r2, r2, #5
- 80046ba:	17db      	asrs	r3, r3, #31
- 80046bc:	1ad3      	subs	r3, r2, r3
- 80046be:	b2da      	uxtb	r2, r3
- 80046c0:	4b90      	ldr	r3, [pc, #576]	; (8004904 <AppLEDTask+0x2e0>)
- 80046c2:	701a      	strb	r2, [r3, #0]
+ 80046a4:	4b9d      	ldr	r3, [pc, #628]	; (800491c <AppLEDTask+0x2f8>)
+ 80046a6:	781b      	ldrb	r3, [r3, #0]
+ 80046a8:	461a      	mov	r2, r3
+ 80046aa:	4613      	mov	r3, r2
+ 80046ac:	021b      	lsls	r3, r3, #8
+ 80046ae:	1a9b      	subs	r3, r3, r2
+ 80046b0:	4a9b      	ldr	r2, [pc, #620]	; (8004920 <AppLEDTask+0x2fc>)
+ 80046b2:	fb82 1203 	smull	r1, r2, r2, r3
+ 80046b6:	1152      	asrs	r2, r2, #5
+ 80046b8:	17db      	asrs	r3, r3, #31
+ 80046ba:	1ad3      	subs	r3, r2, r3
+ 80046bc:	b2da      	uxtb	r2, r3
+ 80046be:	4b91      	ldr	r3, [pc, #580]	; (8004904 <AppLEDTask+0x2e0>)
+ 80046c0:	701a      	strb	r2, [r3, #0]
 		Current_Value[1]=(uint32_t)(Manu_value*255/100);
- 80046c4:	4b95      	ldr	r3, [pc, #596]	; (800491c <AppLEDTask+0x2f8>)
- 80046c6:	781b      	ldrb	r3, [r3, #0]
- 80046c8:	461a      	mov	r2, r3
- 80046ca:	4613      	mov	r3, r2
- 80046cc:	021b      	lsls	r3, r3, #8
- 80046ce:	1a9b      	subs	r3, r3, r2
- 80046d0:	4a93      	ldr	r2, [pc, #588]	; (8004920 <AppLEDTask+0x2fc>)
- 80046d2:	fb82 1203 	smull	r1, r2, r2, r3
- 80046d6:	1152      	asrs	r2, r2, #5
- 80046d8:	17db      	asrs	r3, r3, #31
- 80046da:	1ad3      	subs	r3, r2, r3
- 80046dc:	b2da      	uxtb	r2, r3
- 80046de:	4b89      	ldr	r3, [pc, #548]	; (8004904 <AppLEDTask+0x2e0>)
- 80046e0:	705a      	strb	r2, [r3, #1]
+ 80046c2:	4b96      	ldr	r3, [pc, #600]	; (800491c <AppLEDTask+0x2f8>)
+ 80046c4:	781b      	ldrb	r3, [r3, #0]
+ 80046c6:	461a      	mov	r2, r3
+ 80046c8:	4613      	mov	r3, r2
+ 80046ca:	021b      	lsls	r3, r3, #8
+ 80046cc:	1a9b      	subs	r3, r3, r2
+ 80046ce:	4a94      	ldr	r2, [pc, #592]	; (8004920 <AppLEDTask+0x2fc>)
+ 80046d0:	fb82 1203 	smull	r1, r2, r2, r3
+ 80046d4:	1152      	asrs	r2, r2, #5
+ 80046d6:	17db      	asrs	r3, r3, #31
+ 80046d8:	1ad3      	subs	r3, r2, r3
+ 80046da:	b2da      	uxtb	r2, r3
+ 80046dc:	4b89      	ldr	r3, [pc, #548]	; (8004904 <AppLEDTask+0x2e0>)
+ 80046de:	705a      	strb	r2, [r3, #1]
 		Current_Value[2]=(uint32_t)(Manu_value*255/100);
- 80046e2:	4b8e      	ldr	r3, [pc, #568]	; (800491c <AppLEDTask+0x2f8>)
- 80046e4:	781b      	ldrb	r3, [r3, #0]
- 80046e6:	461a      	mov	r2, r3
- 80046e8:	4613      	mov	r3, r2
- 80046ea:	021b      	lsls	r3, r3, #8
- 80046ec:	1a9b      	subs	r3, r3, r2
- 80046ee:	4a8c      	ldr	r2, [pc, #560]	; (8004920 <AppLEDTask+0x2fc>)
- 80046f0:	fb82 1203 	smull	r1, r2, r2, r3
- 80046f4:	1152      	asrs	r2, r2, #5
- 80046f6:	17db      	asrs	r3, r3, #31
- 80046f8:	1ad3      	subs	r3, r2, r3
- 80046fa:	b2da      	uxtb	r2, r3
- 80046fc:	4b81      	ldr	r3, [pc, #516]	; (8004904 <AppLEDTask+0x2e0>)
- 80046fe:	709a      	strb	r2, [r3, #2]
+ 80046e0:	4b8e      	ldr	r3, [pc, #568]	; (800491c <AppLEDTask+0x2f8>)
+ 80046e2:	781b      	ldrb	r3, [r3, #0]
+ 80046e4:	461a      	mov	r2, r3
+ 80046e6:	4613      	mov	r3, r2
+ 80046e8:	021b      	lsls	r3, r3, #8
+ 80046ea:	1a9b      	subs	r3, r3, r2
+ 80046ec:	4a8c      	ldr	r2, [pc, #560]	; (8004920 <AppLEDTask+0x2fc>)
+ 80046ee:	fb82 1203 	smull	r1, r2, r2, r3
+ 80046f2:	1152      	asrs	r2, r2, #5
+ 80046f4:	17db      	asrs	r3, r3, #31
+ 80046f6:	1ad3      	subs	r3, r2, r3
+ 80046f8:	b2da      	uxtb	r2, r3
+ 80046fa:	4b82      	ldr	r3, [pc, #520]	; (8004904 <AppLEDTask+0x2e0>)
+ 80046fc:	709a      	strb	r2, [r3, #2]
 		Current_Value[3]=(uint32_t)(Manu_value*255/100);
- 8004700:	4b86      	ldr	r3, [pc, #536]	; (800491c <AppLEDTask+0x2f8>)
- 8004702:	781b      	ldrb	r3, [r3, #0]
- 8004704:	461a      	mov	r2, r3
- 8004706:	4613      	mov	r3, r2
- 8004708:	021b      	lsls	r3, r3, #8
- 800470a:	1a9b      	subs	r3, r3, r2
- 800470c:	4a84      	ldr	r2, [pc, #528]	; (8004920 <AppLEDTask+0x2fc>)
- 800470e:	fb82 1203 	smull	r1, r2, r2, r3
- 8004712:	1152      	asrs	r2, r2, #5
- 8004714:	17db      	asrs	r3, r3, #31
- 8004716:	1ad3      	subs	r3, r2, r3
- 8004718:	b2da      	uxtb	r2, r3
- 800471a:	4b7a      	ldr	r3, [pc, #488]	; (8004904 <AppLEDTask+0x2e0>)
- 800471c:	70da      	strb	r2, [r3, #3]
+ 80046fe:	4b87      	ldr	r3, [pc, #540]	; (800491c <AppLEDTask+0x2f8>)
+ 8004700:	781b      	ldrb	r3, [r3, #0]
+ 8004702:	461a      	mov	r2, r3
+ 8004704:	4613      	mov	r3, r2
+ 8004706:	021b      	lsls	r3, r3, #8
+ 8004708:	1a9b      	subs	r3, r3, r2
+ 800470a:	4a85      	ldr	r2, [pc, #532]	; (8004920 <AppLEDTask+0x2fc>)
+ 800470c:	fb82 1203 	smull	r1, r2, r2, r3
+ 8004710:	1152      	asrs	r2, r2, #5
+ 8004712:	17db      	asrs	r3, r3, #31
+ 8004714:	1ad3      	subs	r3, r2, r3
+ 8004716:	b2da      	uxtb	r2, r3
+ 8004718:	4b7a      	ldr	r3, [pc, #488]	; (8004904 <AppLEDTask+0x2e0>)
+ 800471a:	70da      	strb	r2, [r3, #3]
 		Current_Value[4]=(uint32_t)(Manu_value*255/100);
- 800471e:	4b7f      	ldr	r3, [pc, #508]	; (800491c <AppLEDTask+0x2f8>)
- 8004720:	781b      	ldrb	r3, [r3, #0]
- 8004722:	461a      	mov	r2, r3
- 8004724:	4613      	mov	r3, r2
- 8004726:	021b      	lsls	r3, r3, #8
- 8004728:	1a9b      	subs	r3, r3, r2
- 800472a:	4a7d      	ldr	r2, [pc, #500]	; (8004920 <AppLEDTask+0x2fc>)
- 800472c:	fb82 1203 	smull	r1, r2, r2, r3
- 8004730:	1152      	asrs	r2, r2, #5
- 8004732:	17db      	asrs	r3, r3, #31
- 8004734:	1ad3      	subs	r3, r2, r3
- 8004736:	b2da      	uxtb	r2, r3
- 8004738:	4b72      	ldr	r3, [pc, #456]	; (8004904 <AppLEDTask+0x2e0>)
- 800473a:	711a      	strb	r2, [r3, #4]
+ 800471c:	4b7f      	ldr	r3, [pc, #508]	; (800491c <AppLEDTask+0x2f8>)
+ 800471e:	781b      	ldrb	r3, [r3, #0]
+ 8004720:	461a      	mov	r2, r3
+ 8004722:	4613      	mov	r3, r2
+ 8004724:	021b      	lsls	r3, r3, #8
+ 8004726:	1a9b      	subs	r3, r3, r2
+ 8004728:	4a7d      	ldr	r2, [pc, #500]	; (8004920 <AppLEDTask+0x2fc>)
+ 800472a:	fb82 1203 	smull	r1, r2, r2, r3
+ 800472e:	1152      	asrs	r2, r2, #5
+ 8004730:	17db      	asrs	r3, r3, #31
+ 8004732:	1ad3      	subs	r3, r2, r3
+ 8004734:	b2da      	uxtb	r2, r3
+ 8004736:	4b73      	ldr	r3, [pc, #460]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004738:	711a      	strb	r2, [r3, #4]
 		Current_Value[5]=(uint32_t)(Manu_value*255/100);
- 800473c:	4b77      	ldr	r3, [pc, #476]	; (800491c <AppLEDTask+0x2f8>)
- 800473e:	781b      	ldrb	r3, [r3, #0]
- 8004740:	461a      	mov	r2, r3
- 8004742:	4613      	mov	r3, r2
- 8004744:	021b      	lsls	r3, r3, #8
- 8004746:	1a9b      	subs	r3, r3, r2
- 8004748:	4a75      	ldr	r2, [pc, #468]	; (8004920 <AppLEDTask+0x2fc>)
- 800474a:	fb82 1203 	smull	r1, r2, r2, r3
- 800474e:	1152      	asrs	r2, r2, #5
- 8004750:	17db      	asrs	r3, r3, #31
- 8004752:	1ad3      	subs	r3, r2, r3
- 8004754:	b2da      	uxtb	r2, r3
- 8004756:	4b6b      	ldr	r3, [pc, #428]	; (8004904 <AppLEDTask+0x2e0>)
- 8004758:	715a      	strb	r2, [r3, #5]
+ 800473a:	4b78      	ldr	r3, [pc, #480]	; (800491c <AppLEDTask+0x2f8>)
+ 800473c:	781b      	ldrb	r3, [r3, #0]
+ 800473e:	461a      	mov	r2, r3
+ 8004740:	4613      	mov	r3, r2
+ 8004742:	021b      	lsls	r3, r3, #8
+ 8004744:	1a9b      	subs	r3, r3, r2
+ 8004746:	4a76      	ldr	r2, [pc, #472]	; (8004920 <AppLEDTask+0x2fc>)
+ 8004748:	fb82 1203 	smull	r1, r2, r2, r3
+ 800474c:	1152      	asrs	r2, r2, #5
+ 800474e:	17db      	asrs	r3, r3, #31
+ 8004750:	1ad3      	subs	r3, r2, r3
+ 8004752:	b2da      	uxtb	r2, r3
+ 8004754:	4b6b      	ldr	r3, [pc, #428]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004756:	715a      	strb	r2, [r3, #5]
 		Current_Value[6]=(uint32_t)(Manu_value*255/100);
- 800475a:	4b70      	ldr	r3, [pc, #448]	; (800491c <AppLEDTask+0x2f8>)
- 800475c:	781b      	ldrb	r3, [r3, #0]
- 800475e:	461a      	mov	r2, r3
- 8004760:	4613      	mov	r3, r2
- 8004762:	021b      	lsls	r3, r3, #8
- 8004764:	1a9b      	subs	r3, r3, r2
- 8004766:	4a6e      	ldr	r2, [pc, #440]	; (8004920 <AppLEDTask+0x2fc>)
- 8004768:	fb82 1203 	smull	r1, r2, r2, r3
- 800476c:	1152      	asrs	r2, r2, #5
- 800476e:	17db      	asrs	r3, r3, #31
- 8004770:	1ad3      	subs	r3, r2, r3
- 8004772:	b2da      	uxtb	r2, r3
- 8004774:	4b63      	ldr	r3, [pc, #396]	; (8004904 <AppLEDTask+0x2e0>)
- 8004776:	719a      	strb	r2, [r3, #6]
+ 8004758:	4b70      	ldr	r3, [pc, #448]	; (800491c <AppLEDTask+0x2f8>)
+ 800475a:	781b      	ldrb	r3, [r3, #0]
+ 800475c:	461a      	mov	r2, r3
+ 800475e:	4613      	mov	r3, r2
+ 8004760:	021b      	lsls	r3, r3, #8
+ 8004762:	1a9b      	subs	r3, r3, r2
+ 8004764:	4a6e      	ldr	r2, [pc, #440]	; (8004920 <AppLEDTask+0x2fc>)
+ 8004766:	fb82 1203 	smull	r1, r2, r2, r3
+ 800476a:	1152      	asrs	r2, r2, #5
+ 800476c:	17db      	asrs	r3, r3, #31
+ 800476e:	1ad3      	subs	r3, r2, r3
+ 8004770:	b2da      	uxtb	r2, r3
+ 8004772:	4b64      	ldr	r3, [pc, #400]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004774:	719a      	strb	r2, [r3, #6]
 		Current_Value[7]=(uint32_t)(Manu_value*255/100);
- 8004778:	4b68      	ldr	r3, [pc, #416]	; (800491c <AppLEDTask+0x2f8>)
- 800477a:	781b      	ldrb	r3, [r3, #0]
- 800477c:	461a      	mov	r2, r3
- 800477e:	4613      	mov	r3, r2
- 8004780:	021b      	lsls	r3, r3, #8
- 8004782:	1a9b      	subs	r3, r3, r2
- 8004784:	4a66      	ldr	r2, [pc, #408]	; (8004920 <AppLEDTask+0x2fc>)
- 8004786:	fb82 1203 	smull	r1, r2, r2, r3
- 800478a:	1152      	asrs	r2, r2, #5
- 800478c:	17db      	asrs	r3, r3, #31
- 800478e:	1ad3      	subs	r3, r2, r3
- 8004790:	b2da      	uxtb	r2, r3
- 8004792:	4b5c      	ldr	r3, [pc, #368]	; (8004904 <AppLEDTask+0x2e0>)
- 8004794:	71da      	strb	r2, [r3, #7]
+ 8004776:	4b69      	ldr	r3, [pc, #420]	; (800491c <AppLEDTask+0x2f8>)
+ 8004778:	781b      	ldrb	r3, [r3, #0]
+ 800477a:	461a      	mov	r2, r3
+ 800477c:	4613      	mov	r3, r2
+ 800477e:	021b      	lsls	r3, r3, #8
+ 8004780:	1a9b      	subs	r3, r3, r2
+ 8004782:	4a67      	ldr	r2, [pc, #412]	; (8004920 <AppLEDTask+0x2fc>)
+ 8004784:	fb82 1203 	smull	r1, r2, r2, r3
+ 8004788:	1152      	asrs	r2, r2, #5
+ 800478a:	17db      	asrs	r3, r3, #31
+ 800478c:	1ad3      	subs	r3, r2, r3
+ 800478e:	b2da      	uxtb	r2, r3
+ 8004790:	4b5c      	ldr	r3, [pc, #368]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004792:	71da      	strb	r2, [r3, #7]
 		Current_Value[8]=(uint32_t)(Manu_value*255/100);
- 8004796:	4b61      	ldr	r3, [pc, #388]	; (800491c <AppLEDTask+0x2f8>)
- 8004798:	781b      	ldrb	r3, [r3, #0]
- 800479a:	461a      	mov	r2, r3
- 800479c:	4613      	mov	r3, r2
- 800479e:	021b      	lsls	r3, r3, #8
- 80047a0:	1a9b      	subs	r3, r3, r2
- 80047a2:	4a5f      	ldr	r2, [pc, #380]	; (8004920 <AppLEDTask+0x2fc>)
- 80047a4:	fb82 1203 	smull	r1, r2, r2, r3
- 80047a8:	1152      	asrs	r2, r2, #5
- 80047aa:	17db      	asrs	r3, r3, #31
- 80047ac:	1ad3      	subs	r3, r2, r3
- 80047ae:	b2da      	uxtb	r2, r3
- 80047b0:	4b54      	ldr	r3, [pc, #336]	; (8004904 <AppLEDTask+0x2e0>)
- 80047b2:	721a      	strb	r2, [r3, #8]
+ 8004794:	4b61      	ldr	r3, [pc, #388]	; (800491c <AppLEDTask+0x2f8>)
+ 8004796:	781b      	ldrb	r3, [r3, #0]
+ 8004798:	461a      	mov	r2, r3
+ 800479a:	4613      	mov	r3, r2
+ 800479c:	021b      	lsls	r3, r3, #8
+ 800479e:	1a9b      	subs	r3, r3, r2
+ 80047a0:	4a5f      	ldr	r2, [pc, #380]	; (8004920 <AppLEDTask+0x2fc>)
+ 80047a2:	fb82 1203 	smull	r1, r2, r2, r3
+ 80047a6:	1152      	asrs	r2, r2, #5
+ 80047a8:	17db      	asrs	r3, r3, #31
+ 80047aa:	1ad3      	subs	r3, r2, r3
+ 80047ac:	b2da      	uxtb	r2, r3
+ 80047ae:	4b55      	ldr	r3, [pc, #340]	; (8004904 <AppLEDTask+0x2e0>)
+ 80047b0:	721a      	strb	r2, [r3, #8]
 		Current_Value[9]=(uint32_t)(Manu_value*255/100);
- 80047b4:	4b59      	ldr	r3, [pc, #356]	; (800491c <AppLEDTask+0x2f8>)
- 80047b6:	781b      	ldrb	r3, [r3, #0]
- 80047b8:	461a      	mov	r2, r3
- 80047ba:	4613      	mov	r3, r2
- 80047bc:	021b      	lsls	r3, r3, #8
- 80047be:	1a9b      	subs	r3, r3, r2
- 80047c0:	4a57      	ldr	r2, [pc, #348]	; (8004920 <AppLEDTask+0x2fc>)
- 80047c2:	fb82 1203 	smull	r1, r2, r2, r3
- 80047c6:	1152      	asrs	r2, r2, #5
- 80047c8:	17db      	asrs	r3, r3, #31
- 80047ca:	1ad3      	subs	r3, r2, r3
- 80047cc:	b2da      	uxtb	r2, r3
- 80047ce:	4b4d      	ldr	r3, [pc, #308]	; (8004904 <AppLEDTask+0x2e0>)
- 80047d0:	725a      	strb	r2, [r3, #9]
+ 80047b2:	4b5a      	ldr	r3, [pc, #360]	; (800491c <AppLEDTask+0x2f8>)
+ 80047b4:	781b      	ldrb	r3, [r3, #0]
+ 80047b6:	461a      	mov	r2, r3
+ 80047b8:	4613      	mov	r3, r2
+ 80047ba:	021b      	lsls	r3, r3, #8
+ 80047bc:	1a9b      	subs	r3, r3, r2
+ 80047be:	4a58      	ldr	r2, [pc, #352]	; (8004920 <AppLEDTask+0x2fc>)
+ 80047c0:	fb82 1203 	smull	r1, r2, r2, r3
+ 80047c4:	1152      	asrs	r2, r2, #5
+ 80047c6:	17db      	asrs	r3, r3, #31
+ 80047c8:	1ad3      	subs	r3, r2, r3
+ 80047ca:	b2da      	uxtb	r2, r3
+ 80047cc:	4b4d      	ldr	r3, [pc, #308]	; (8004904 <AppLEDTask+0x2e0>)
+ 80047ce:	725a      	strb	r2, [r3, #9]
+
 		Speed_value=0;
- 80047d2:	4b4f      	ldr	r3, [pc, #316]	; (8004910 <AppLEDTask+0x2ec>)
- 80047d4:	2200      	movs	r2, #0
- 80047d6:	701a      	strb	r2, [r3, #0]
+ 80047d0:	4b4f      	ldr	r3, [pc, #316]	; (8004910 <AppLEDTask+0x2ec>)
+ 80047d2:	2200      	movs	r2, #0
+ 80047d4:	701a      	strb	r2, [r3, #0]
 		Strob_value_Full=0;
- 80047d8:	4b4e      	ldr	r3, [pc, #312]	; (8004914 <AppLEDTask+0x2f0>)
- 80047da:	2200      	movs	r2, #0
- 80047dc:	701a      	strb	r2, [r3, #0]
+ 80047d6:	4b4f      	ldr	r3, [pc, #316]	; (8004914 <AppLEDTask+0x2f0>)
+ 80047d8:	2200      	movs	r2, #0
+ 80047da:	701a      	strb	r2, [r3, #0]
 		Strob_value_Rand=0;
- 80047de:	4b4e      	ldr	r3, [pc, #312]	; (8004918 <AppLEDTask+0x2f4>)
- 80047e0:	2200      	movs	r2, #0
- 80047e2:	701a      	strb	r2, [r3, #0]
-}
- 80047e4:	e3cc      	b.n	8004f80 <AppLEDTask+0x95c>
+ 80047dc:	4b4e      	ldr	r3, [pc, #312]	; (8004918 <AppLEDTask+0x2f4>)
+ 80047de:	2200      	movs	r2, #0
+ 80047e0:	701a      	strb	r2, [r3, #0]
+ 80047e2:	e12e      	b.n	8004a42 <AppLEDTask+0x41e>
+	}
+	else	//DMX MODE
+	{
 		if(HAL_GetTick()>Protocol_DMX_GetLastTickFrame()+TIMOUT_DMX_SIGNAL)
- 80047e6:	f7fc f977 	bl	8000ad8 <HAL_GetTick>
- 80047ea:	4604      	mov	r4, r0
- 80047ec:	f7ff f982 	bl	8003af4 <Protocol_DMX_GetLastTickFrame>
- 80047f0:	4603      	mov	r3, r0
- 80047f2:	f603 33b8 	addw	r3, r3, #3000	; 0xbb8
- 80047f6:	429c      	cmp	r4, r3
- 80047f8:	d92a      	bls.n	8004850 <AppLEDTask+0x22c>
+ 80047e4:	f7fc f978 	bl	8000ad8 <HAL_GetTick>
+ 80047e8:	4604      	mov	r4, r0
+ 80047ea:	f7ff f983 	bl	8003af4 <Protocol_DMX_GetLastTickFrame>
+ 80047ee:	4603      	mov	r3, r0
+ 80047f0:	f603 33b8 	addw	r3, r3, #3000	; 0xbb8
+ 80047f4:	429c      	cmp	r4, r3
+ 80047f6:	d92a      	bls.n	800484e <AppLEDTask+0x22a>
+		{
 			Current_Value[0]=0;
- 80047fa:	4b42      	ldr	r3, [pc, #264]	; (8004904 <AppLEDTask+0x2e0>)
- 80047fc:	2200      	movs	r2, #0
- 80047fe:	701a      	strb	r2, [r3, #0]
+ 80047f8:	4b42      	ldr	r3, [pc, #264]	; (8004904 <AppLEDTask+0x2e0>)
+ 80047fa:	2200      	movs	r2, #0
+ 80047fc:	701a      	strb	r2, [r3, #0]
 			Current_Value[1]=0;
- 8004800:	4b40      	ldr	r3, [pc, #256]	; (8004904 <AppLEDTask+0x2e0>)
- 8004802:	2200      	movs	r2, #0
- 8004804:	705a      	strb	r2, [r3, #1]
+ 80047fe:	4b41      	ldr	r3, [pc, #260]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004800:	2200      	movs	r2, #0
+ 8004802:	705a      	strb	r2, [r3, #1]
 			Current_Value[2]=0;
- 8004806:	4b3f      	ldr	r3, [pc, #252]	; (8004904 <AppLEDTask+0x2e0>)
- 8004808:	2200      	movs	r2, #0
- 800480a:	709a      	strb	r2, [r3, #2]
+ 8004804:	4b3f      	ldr	r3, [pc, #252]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004806:	2200      	movs	r2, #0
+ 8004808:	709a      	strb	r2, [r3, #2]
 			Current_Value[3]=0;
- 800480c:	4b3d      	ldr	r3, [pc, #244]	; (8004904 <AppLEDTask+0x2e0>)
- 800480e:	2200      	movs	r2, #0
- 8004810:	70da      	strb	r2, [r3, #3]
+ 800480a:	4b3e      	ldr	r3, [pc, #248]	; (8004904 <AppLEDTask+0x2e0>)
+ 800480c:	2200      	movs	r2, #0
+ 800480e:	70da      	strb	r2, [r3, #3]
 			Current_Value[4]=0;
- 8004812:	4b3c      	ldr	r3, [pc, #240]	; (8004904 <AppLEDTask+0x2e0>)
- 8004814:	2200      	movs	r2, #0
- 8004816:	711a      	strb	r2, [r3, #4]
+ 8004810:	4b3c      	ldr	r3, [pc, #240]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004812:	2200      	movs	r2, #0
+ 8004814:	711a      	strb	r2, [r3, #4]
 			Current_Value[5]=0;
- 8004818:	4b3a      	ldr	r3, [pc, #232]	; (8004904 <AppLEDTask+0x2e0>)
- 800481a:	2200      	movs	r2, #0
- 800481c:	715a      	strb	r2, [r3, #5]
+ 8004816:	4b3b      	ldr	r3, [pc, #236]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004818:	2200      	movs	r2, #0
+ 800481a:	715a      	strb	r2, [r3, #5]
 			Current_Value[6]=0;
- 800481e:	4b39      	ldr	r3, [pc, #228]	; (8004904 <AppLEDTask+0x2e0>)
- 8004820:	2200      	movs	r2, #0
- 8004822:	719a      	strb	r2, [r3, #6]
+ 800481c:	4b39      	ldr	r3, [pc, #228]	; (8004904 <AppLEDTask+0x2e0>)
+ 800481e:	2200      	movs	r2, #0
+ 8004820:	719a      	strb	r2, [r3, #6]
 			Current_Value[7]=0;
- 8004824:	4b37      	ldr	r3, [pc, #220]	; (8004904 <AppLEDTask+0x2e0>)
- 8004826:	2200      	movs	r2, #0
- 8004828:	71da      	strb	r2, [r3, #7]
+ 8004822:	4b38      	ldr	r3, [pc, #224]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004824:	2200      	movs	r2, #0
+ 8004826:	71da      	strb	r2, [r3, #7]
 			Current_Value[8]=0;
- 800482a:	4b36      	ldr	r3, [pc, #216]	; (8004904 <AppLEDTask+0x2e0>)
- 800482c:	2200      	movs	r2, #0
- 800482e:	721a      	strb	r2, [r3, #8]
+ 8004828:	4b36      	ldr	r3, [pc, #216]	; (8004904 <AppLEDTask+0x2e0>)
+ 800482a:	2200      	movs	r2, #0
+ 800482c:	721a      	strb	r2, [r3, #8]
 			Current_Value[9]=0;
- 8004830:	4b34      	ldr	r3, [pc, #208]	; (8004904 <AppLEDTask+0x2e0>)
- 8004832:	2200      	movs	r2, #0
- 8004834:	725a      	strb	r2, [r3, #9]
+ 800482e:	4b35      	ldr	r3, [pc, #212]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004830:	2200      	movs	r2, #0
+ 8004832:	725a      	strb	r2, [r3, #9]
+
 			Speed_value=0;
- 8004836:	4b36      	ldr	r3, [pc, #216]	; (8004910 <AppLEDTask+0x2ec>)
- 8004838:	2200      	movs	r2, #0
- 800483a:	701a      	strb	r2, [r3, #0]
+ 8004834:	4b36      	ldr	r3, [pc, #216]	; (8004910 <AppLEDTask+0x2ec>)
+ 8004836:	2200      	movs	r2, #0
+ 8004838:	701a      	strb	r2, [r3, #0]
 			Strob_value_Full=0;
- 800483c:	4b35      	ldr	r3, [pc, #212]	; (8004914 <AppLEDTask+0x2f0>)
- 800483e:	2200      	movs	r2, #0
- 8004840:	701a      	strb	r2, [r3, #0]
+ 800483a:	4b36      	ldr	r3, [pc, #216]	; (8004914 <AppLEDTask+0x2f0>)
+ 800483c:	2200      	movs	r2, #0
+ 800483e:	701a      	strb	r2, [r3, #0]
 			Strob_value_Rand=0;
- 8004842:	4b35      	ldr	r3, [pc, #212]	; (8004918 <AppLEDTask+0x2f4>)
- 8004844:	2200      	movs	r2, #0
- 8004846:	701a      	strb	r2, [r3, #0]
+ 8004840:	4b35      	ldr	r3, [pc, #212]	; (8004918 <AppLEDTask+0x2f4>)
+ 8004842:	2200      	movs	r2, #0
+ 8004844:	701a      	strb	r2, [r3, #0]
+
 			DMX_signal_OK = __FALSE;
- 8004848:	4b36      	ldr	r3, [pc, #216]	; (8004924 <AppLEDTask+0x300>)
- 800484a:	2200      	movs	r2, #0
- 800484c:	701a      	strb	r2, [r3, #0]
- 800484e:	e0f8      	b.n	8004a42 <AppLEDTask+0x41e>
+ 8004846:	4b37      	ldr	r3, [pc, #220]	; (8004924 <AppLEDTask+0x300>)
+ 8004848:	2200      	movs	r2, #0
+ 800484a:	701a      	strb	r2, [r3, #0]
+ 800484c:	e0f9      	b.n	8004a42 <AppLEDTask+0x41e>
+		}
+		else
+		{
 			Speed_value=Protocol_DMX_GetValue(12);
- 8004850:	200c      	movs	r0, #12
- 8004852:	f7ff f937 	bl	8003ac4 <Protocol_DMX_GetValue>
- 8004856:	4603      	mov	r3, r0
- 8004858:	461a      	mov	r2, r3
- 800485a:	4b2d      	ldr	r3, [pc, #180]	; (8004910 <AppLEDTask+0x2ec>)
- 800485c:	701a      	strb	r2, [r3, #0]
+ 800484e:	200c      	movs	r0, #12
+ 8004850:	f7ff f938 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 8004854:	4603      	mov	r3, r0
+ 8004856:	461a      	mov	r2, r3
+ 8004858:	4b2d      	ldr	r3, [pc, #180]	; (8004910 <AppLEDTask+0x2ec>)
+ 800485a:	701a      	strb	r2, [r3, #0]
 			temp_strob_value=Protocol_DMX_GetValue(11);
- 800485e:	200b      	movs	r0, #11
- 8004860:	f7ff f930 	bl	8003ac4 <Protocol_DMX_GetValue>
- 8004864:	4603      	mov	r3, r0
- 8004866:	71fb      	strb	r3, [r7, #7]
+ 800485c:	200b      	movs	r0, #11
+ 800485e:	f7ff f931 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 8004862:	4603      	mov	r3, r0
+ 8004864:	71fb      	strb	r3, [r7, #7]
+
+			//Speed update value
 			if(Speed_value==0)		//Instant
- 8004868:	4b29      	ldr	r3, [pc, #164]	; (8004910 <AppLEDTask+0x2ec>)
- 800486a:	781b      	ldrb	r3, [r3, #0]
- 800486c:	2b00      	cmp	r3, #0
- 800486e:	d146      	bne.n	80048fe <AppLEDTask+0x2da>
+ 8004866:	4b2a      	ldr	r3, [pc, #168]	; (8004910 <AppLEDTask+0x2ec>)
+ 8004868:	781b      	ldrb	r3, [r3, #0]
+ 800486a:	2b00      	cmp	r3, #0
+ 800486c:	d146      	bne.n	80048fc <AppLEDTask+0x2d8>
+			{
 				Current_Value[0] = Protocol_DMX_GetValue(1);									//CHANNEL 1
- 8004870:	2001      	movs	r0, #1
- 8004872:	f7ff f927 	bl	8003ac4 <Protocol_DMX_GetValue>
- 8004876:	4603      	mov	r3, r0
- 8004878:	461a      	mov	r2, r3
- 800487a:	4b22      	ldr	r3, [pc, #136]	; (8004904 <AppLEDTask+0x2e0>)
- 800487c:	701a      	strb	r2, [r3, #0]
+ 800486e:	2001      	movs	r0, #1
+ 8004870:	f7ff f928 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 8004874:	4603      	mov	r3, r0
+ 8004876:	461a      	mov	r2, r3
+ 8004878:	4b22      	ldr	r3, [pc, #136]	; (8004904 <AppLEDTask+0x2e0>)
+ 800487a:	701a      	strb	r2, [r3, #0]
 				Current_Value[1] = Protocol_DMX_GetValue(2);									//CHANNEL 2
- 800487e:	2002      	movs	r0, #2
- 8004880:	f7ff f920 	bl	8003ac4 <Protocol_DMX_GetValue>
- 8004884:	4603      	mov	r3, r0
- 8004886:	461a      	mov	r2, r3
- 8004888:	4b1e      	ldr	r3, [pc, #120]	; (8004904 <AppLEDTask+0x2e0>)
- 800488a:	705a      	strb	r2, [r3, #1]
+ 800487c:	2002      	movs	r0, #2
+ 800487e:	f7ff f921 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 8004882:	4603      	mov	r3, r0
+ 8004884:	461a      	mov	r2, r3
+ 8004886:	4b1f      	ldr	r3, [pc, #124]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004888:	705a      	strb	r2, [r3, #1]
 				Current_Value[2] = Protocol_DMX_GetValue(3);									//CHANNEL 3
- 800488c:	2003      	movs	r0, #3
- 800488e:	f7ff f919 	bl	8003ac4 <Protocol_DMX_GetValue>
- 8004892:	4603      	mov	r3, r0
- 8004894:	461a      	mov	r2, r3
- 8004896:	4b1b      	ldr	r3, [pc, #108]	; (8004904 <AppLEDTask+0x2e0>)
- 8004898:	709a      	strb	r2, [r3, #2]
+ 800488a:	2003      	movs	r0, #3
+ 800488c:	f7ff f91a 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 8004890:	4603      	mov	r3, r0
+ 8004892:	461a      	mov	r2, r3
+ 8004894:	4b1b      	ldr	r3, [pc, #108]	; (8004904 <AppLEDTask+0x2e0>)
+ 8004896:	709a      	strb	r2, [r3, #2]
 				Current_Value[3] = Protocol_DMX_GetValue(4);									//CHANNEL 4
- 800489a:	2004      	movs	r0, #4
- 800489c:	f7ff f912 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048a0:	4603      	mov	r3, r0
- 80048a2:	461a      	mov	r2, r3
- 80048a4:	4b17      	ldr	r3, [pc, #92]	; (8004904 <AppLEDTask+0x2e0>)
- 80048a6:	70da      	strb	r2, [r3, #3]
+ 8004898:	2004      	movs	r0, #4
+ 800489a:	f7ff f913 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 800489e:	4603      	mov	r3, r0
+ 80048a0:	461a      	mov	r2, r3
+ 80048a2:	4b18      	ldr	r3, [pc, #96]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048a4:	70da      	strb	r2, [r3, #3]
 				Current_Value[4] = Protocol_DMX_GetValue(5);									//CHANNEL 5
- 80048a8:	2005      	movs	r0, #5
- 80048aa:	f7ff f90b 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048ae:	4603      	mov	r3, r0
- 80048b0:	461a      	mov	r2, r3
- 80048b2:	4b14      	ldr	r3, [pc, #80]	; (8004904 <AppLEDTask+0x2e0>)
- 80048b4:	711a      	strb	r2, [r3, #4]
+ 80048a6:	2005      	movs	r0, #5
+ 80048a8:	f7ff f90c 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 80048ac:	4603      	mov	r3, r0
+ 80048ae:	461a      	mov	r2, r3
+ 80048b0:	4b14      	ldr	r3, [pc, #80]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048b2:	711a      	strb	r2, [r3, #4]
 				Current_Value[5] = Protocol_DMX_GetValue(6);									//CHANNEL 6
- 80048b6:	2006      	movs	r0, #6
- 80048b8:	f7ff f904 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048bc:	4603      	mov	r3, r0
- 80048be:	461a      	mov	r2, r3
- 80048c0:	4b10      	ldr	r3, [pc, #64]	; (8004904 <AppLEDTask+0x2e0>)
- 80048c2:	715a      	strb	r2, [r3, #5]
+ 80048b4:	2006      	movs	r0, #6
+ 80048b6:	f7ff f905 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 80048ba:	4603      	mov	r3, r0
+ 80048bc:	461a      	mov	r2, r3
+ 80048be:	4b11      	ldr	r3, [pc, #68]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048c0:	715a      	strb	r2, [r3, #5]
 				Current_Value[6] = Protocol_DMX_GetValue(7);									//CHANNEL 7
- 80048c4:	2007      	movs	r0, #7
- 80048c6:	f7ff f8fd 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048ca:	4603      	mov	r3, r0
- 80048cc:	461a      	mov	r2, r3
- 80048ce:	4b0d      	ldr	r3, [pc, #52]	; (8004904 <AppLEDTask+0x2e0>)
- 80048d0:	719a      	strb	r2, [r3, #6]
+ 80048c2:	2007      	movs	r0, #7
+ 80048c4:	f7ff f8fe 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 80048c8:	4603      	mov	r3, r0
+ 80048ca:	461a      	mov	r2, r3
+ 80048cc:	4b0d      	ldr	r3, [pc, #52]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048ce:	719a      	strb	r2, [r3, #6]
 				Current_Value[7] = Protocol_DMX_GetValue(8);									//CHANNEL 8
- 80048d2:	2008      	movs	r0, #8
- 80048d4:	f7ff f8f6 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048d8:	4603      	mov	r3, r0
- 80048da:	461a      	mov	r2, r3
- 80048dc:	4b09      	ldr	r3, [pc, #36]	; (8004904 <AppLEDTask+0x2e0>)
- 80048de:	71da      	strb	r2, [r3, #7]
+ 80048d0:	2008      	movs	r0, #8
+ 80048d2:	f7ff f8f7 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 80048d6:	4603      	mov	r3, r0
+ 80048d8:	461a      	mov	r2, r3
+ 80048da:	4b0a      	ldr	r3, [pc, #40]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048dc:	71da      	strb	r2, [r3, #7]
 				Current_Value[8] = Protocol_DMX_GetValue(9);									//CHANNEL 9
- 80048e0:	2009      	movs	r0, #9
- 80048e2:	f7ff f8ef 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048e6:	4603      	mov	r3, r0
- 80048e8:	461a      	mov	r2, r3
- 80048ea:	4b06      	ldr	r3, [pc, #24]	; (8004904 <AppLEDTask+0x2e0>)
- 80048ec:	721a      	strb	r2, [r3, #8]
+ 80048de:	2009      	movs	r0, #9
+ 80048e0:	f7ff f8f0 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 80048e4:	4603      	mov	r3, r0
+ 80048e6:	461a      	mov	r2, r3
+ 80048e8:	4b06      	ldr	r3, [pc, #24]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048ea:	721a      	strb	r2, [r3, #8]
 				Current_Value[9] = Protocol_DMX_GetValue(10);									//CHANNEL 10
- 80048ee:	200a      	movs	r0, #10
- 80048f0:	f7ff f8e8 	bl	8003ac4 <Protocol_DMX_GetValue>
- 80048f4:	4603      	mov	r3, r0
- 80048f6:	461a      	mov	r2, r3
- 80048f8:	4b02      	ldr	r3, [pc, #8]	; (8004904 <AppLEDTask+0x2e0>)
- 80048fa:	725a      	strb	r2, [r3, #9]
- 80048fc:	e08b      	b.n	8004a16 <AppLEDTask+0x3f2>
+ 80048ec:	200a      	movs	r0, #10
+ 80048ee:	f7ff f8e9 	bl	8003ac4 <Protocol_DMX_GetValue>
+ 80048f2:	4603      	mov	r3, r0
+ 80048f4:	461a      	mov	r2, r3
+ 80048f6:	4b03      	ldr	r3, [pc, #12]	; (8004904 <AppLEDTask+0x2e0>)
+ 80048f8:	725a      	strb	r2, [r3, #9]
+ 80048fa:	e08c      	b.n	8004a16 <AppLEDTask+0x3f2>
+			}
+			else
+			{
 				for (uint8_t i =0 ;i<10; i++)
- 80048fe:	2300      	movs	r3, #0
- 8004900:	71bb      	strb	r3, [r7, #6]
- 8004902:	e085      	b.n	8004a10 <AppLEDTask+0x3ec>
+ 80048fc:	2300      	movs	r3, #0
+ 80048fe:	71bb      	strb	r3, [r7, #6]
+ 8004900:	e086      	b.n	8004a10 <AppLEDTask+0x3ec>
+ 8004902:	bf00      	nop
  8004904:	20000954 	.word	0x20000954
  8004908:	20000969 	.word	0x20000969
  800490c:	2000099c 	.word	0x2000099c
@@ -12681,6 +12693,7 @@ void AppLEDTask()
  800491c:	20000970 	.word	0x20000970
  8004920:	51eb851f 	.word	0x51eb851f
  8004924:	20000971 	.word	0x20000971
+				{
 					if(Current_Value[i]<Protocol_DMX_GetValue(i+1))
  8004928:	79bb      	ldrb	r3, [r7, #6]
  800492a:	4aa6      	ldr	r2, [pc, #664]	; (8004bc4 <AppLEDTask+0x5a0>)
@@ -12693,6 +12706,7 @@ void AppLEDTask()
  800493a:	4603      	mov	r3, r0
  800493c:	429c      	cmp	r4, r3
  800493e:	d22c      	bcs.n	800499a <AppLEDTask+0x376>
+					{
 						calcul=Current_Value[i]+(260-Speed_value)/5;
  8004940:	79bb      	ldrb	r3, [r7, #6]
  8004942:	4aa0      	ldr	r2, [pc, #640]	; (8004bc4 <AppLEDTask+0x5a0>)
@@ -12731,6 +12745,7 @@ void AppLEDTask()
  8004988:	4b8e      	ldr	r3, [pc, #568]	; (8004bc4 <AppLEDTask+0x5a0>)
  800498a:	551a      	strb	r2, [r3, r4]
  800498c:	e03d      	b.n	8004a0a <AppLEDTask+0x3e6>
+						else
 							Current_Value[i]=calcul;
  800498e:	79bb      	ldrb	r3, [r7, #6]
  8004990:	683a      	ldr	r2, [r7, #0]
@@ -12738,6 +12753,7 @@ void AppLEDTask()
  8004994:	4a8b      	ldr	r2, [pc, #556]	; (8004bc4 <AppLEDTask+0x5a0>)
  8004996:	54d1      	strb	r1, [r2, r3]
  8004998:	e037      	b.n	8004a0a <AppLEDTask+0x3e6>
+					}
 					else if (Current_Value[i]>Protocol_DMX_GetValue(i+1))
  800499a:	79bb      	ldrb	r3, [r7, #6]
  800499c:	4a89      	ldr	r2, [pc, #548]	; (8004bc4 <AppLEDTask+0x5a0>)
@@ -12750,6 +12766,7 @@ void AppLEDTask()
  80049ac:	4603      	mov	r3, r0
  80049ae:	429c      	cmp	r4, r3
  80049b0:	d92b      	bls.n	8004a0a <AppLEDTask+0x3e6>
+					{
 						calcul=Current_Value[i]-(260-Speed_value)/5;
  80049b2:	79bb      	ldrb	r3, [r7, #6]
  80049b4:	4a83      	ldr	r2, [pc, #524]	; (8004bc4 <AppLEDTask+0x5a0>)
@@ -12788,6 +12805,7 @@ void AppLEDTask()
  80049fa:	4b72      	ldr	r3, [pc, #456]	; (8004bc4 <AppLEDTask+0x5a0>)
  80049fc:	551a      	strb	r2, [r3, r4]
  80049fe:	e004      	b.n	8004a0a <AppLEDTask+0x3e6>
+						else
 							Current_Value[i]=calcul;
  8004a00:	79bb      	ldrb	r3, [r7, #6]
  8004a02:	683a      	ldr	r2, [r7, #0]
@@ -12801,10 +12819,16 @@ void AppLEDTask()
  8004a10:	79bb      	ldrb	r3, [r7, #6]
  8004a12:	2b09      	cmp	r3, #9
  8004a14:	d988      	bls.n	8004928 <AppLEDTask+0x304>
+					}
+				}
+			}
+
+			//Strob decomposition channel
 			if(temp_strob_value>127)
  8004a16:	f997 3007 	ldrsb.w	r3, [r7, #7]
  8004a1a:	2b00      	cmp	r3, #0
  8004a1c:	da08      	bge.n	8004a30 <AppLEDTask+0x40c>
+			{
 				Strob_value_Full=0;
  8004a1e:	4b6c      	ldr	r3, [pc, #432]	; (8004bd0 <AppLEDTask+0x5ac>)
  8004a20:	2200      	movs	r2, #0
@@ -12816,6 +12840,9 @@ void AppLEDTask()
  8004a2a:	4b6a      	ldr	r3, [pc, #424]	; (8004bd4 <AppLEDTask+0x5b0>)
  8004a2c:	701a      	strb	r2, [r3, #0]
  8004a2e:	e005      	b.n	8004a3c <AppLEDTask+0x418>
+			}
+			else
+			{
 				Strob_value_Full=temp_strob_value;
  8004a30:	4a67      	ldr	r2, [pc, #412]	; (8004bd0 <AppLEDTask+0x5ac>)
  8004a32:	79fb      	ldrb	r3, [r7, #7]
@@ -12824,15 +12851,21 @@ void AppLEDTask()
  8004a36:	4b67      	ldr	r3, [pc, #412]	; (8004bd4 <AppLEDTask+0x5b0>)
  8004a38:	2200      	movs	r2, #0
  8004a3a:	701a      	strb	r2, [r3, #0]
+			}
 			DMX_signal_OK = __TRUE;
  8004a3c:	4b66      	ldr	r3, [pc, #408]	; (8004bd8 <AppLEDTask+0x5b4>)
  8004a3e:	2201      	movs	r2, #1
  8004a40:	701a      	strb	r2, [r3, #0]
-		if(temp_strob_value>0)	//STROB
+		}
+	}
+
+	//Set value on LED
+	if(temp_strob_value>0)	//STROB
  8004a42:	79fb      	ldrb	r3, [r7, #7]
  8004a44:	2b00      	cmp	r3, #0
  8004a46:	f000 8233 	beq.w	8004eb0 <AppLEDTask+0x88c>
-			if(Strob_value_Full>0 && cpt_strob>=(129-Strob_value_Full)/2)
+	{
+		if(Strob_value_Full>0 && cpt_strob>=(129-Strob_value_Full)/2)
  8004a4a:	4b61      	ldr	r3, [pc, #388]	; (8004bd0 <AppLEDTask+0x5ac>)
  8004a4c:	781b      	ldrb	r3, [r3, #0]
  8004a4e:	2b00      	cmp	r3, #0
@@ -12848,7 +12881,8 @@ void AppLEDTask()
  8004a64:	681b      	ldr	r3, [r3, #0]
  8004a66:	429a      	cmp	r2, r3
  8004a68:	d867      	bhi.n	8004b3a <AppLEDTask+0x516>
-				PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
+		{
+			PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
  8004a6a:	4b5d      	ldr	r3, [pc, #372]	; (8004be0 <AppLEDTask+0x5bc>)
  8004a6c:	6818      	ldr	r0, [r3, #0]
  8004a6e:	4b5d      	ldr	r3, [pc, #372]	; (8004be4 <AppLEDTask+0x5c0>)
@@ -12858,7 +12892,7 @@ void AppLEDTask()
  8004a76:	b29b      	uxth	r3, r3
  8004a78:	461a      	mov	r2, r3
  8004a7a:	f7ff fa37 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
+			PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
  8004a7e:	4b5a      	ldr	r3, [pc, #360]	; (8004be8 <AppLEDTask+0x5c4>)
  8004a80:	6818      	ldr	r0, [r3, #0]
  8004a82:	4b5a      	ldr	r3, [pc, #360]	; (8004bec <AppLEDTask+0x5c8>)
@@ -12868,7 +12902,7 @@ void AppLEDTask()
  8004a8a:	b29b      	uxth	r3, r3
  8004a8c:	461a      	mov	r2, r3
  8004a8e:	f7ff fa2d 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]);
+			PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]);
  8004a92:	4b57      	ldr	r3, [pc, #348]	; (8004bf0 <AppLEDTask+0x5cc>)
  8004a94:	6818      	ldr	r0, [r3, #0]
  8004a96:	4b57      	ldr	r3, [pc, #348]	; (8004bf4 <AppLEDTask+0x5d0>)
@@ -12878,7 +12912,7 @@ void AppLEDTask()
  8004a9e:	b29b      	uxth	r3, r3
  8004aa0:	461a      	mov	r2, r3
  8004aa2:	f7ff fa23 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]);
+			PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]);
  8004aa6:	4b54      	ldr	r3, [pc, #336]	; (8004bf8 <AppLEDTask+0x5d4>)
  8004aa8:	6818      	ldr	r0, [r3, #0]
  8004aaa:	4b54      	ldr	r3, [pc, #336]	; (8004bfc <AppLEDTask+0x5d8>)
@@ -12888,7 +12922,7 @@ void AppLEDTask()
  8004ab2:	b29b      	uxth	r3, r3
  8004ab4:	461a      	mov	r2, r3
  8004ab6:	f7ff fa19 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]);
+			PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]);
  8004aba:	4b51      	ldr	r3, [pc, #324]	; (8004c00 <AppLEDTask+0x5dc>)
  8004abc:	6818      	ldr	r0, [r3, #0]
  8004abe:	4b51      	ldr	r3, [pc, #324]	; (8004c04 <AppLEDTask+0x5e0>)
@@ -12898,7 +12932,7 @@ void AppLEDTask()
  8004ac6:	b29b      	uxth	r3, r3
  8004ac8:	461a      	mov	r2, r3
  8004aca:	f7ff fa0f 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]);
+			PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]);
  8004ace:	4b4e      	ldr	r3, [pc, #312]	; (8004c08 <AppLEDTask+0x5e4>)
  8004ad0:	6818      	ldr	r0, [r3, #0]
  8004ad2:	4b4e      	ldr	r3, [pc, #312]	; (8004c0c <AppLEDTask+0x5e8>)
@@ -12908,7 +12942,7 @@ void AppLEDTask()
  8004ada:	b29b      	uxth	r3, r3
  8004adc:	461a      	mov	r2, r3
  8004ade:	f7ff fa05 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]);
+			PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]);
  8004ae2:	4b4b      	ldr	r3, [pc, #300]	; (8004c10 <AppLEDTask+0x5ec>)
  8004ae4:	6818      	ldr	r0, [r3, #0]
  8004ae6:	4b4b      	ldr	r3, [pc, #300]	; (8004c14 <AppLEDTask+0x5f0>)
@@ -12918,7 +12952,7 @@ void AppLEDTask()
  8004aee:	b29b      	uxth	r3, r3
  8004af0:	461a      	mov	r2, r3
  8004af2:	f7ff f9fb 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
+			PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
  8004af6:	4b48      	ldr	r3, [pc, #288]	; (8004c18 <AppLEDTask+0x5f4>)
  8004af8:	6818      	ldr	r0, [r3, #0]
  8004afa:	4b48      	ldr	r3, [pc, #288]	; (8004c1c <AppLEDTask+0x5f8>)
@@ -12928,7 +12962,7 @@ void AppLEDTask()
  8004b02:	b29b      	uxth	r3, r3
  8004b04:	461a      	mov	r2, r3
  8004b06:	f7ff f9f1 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
+			PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
  8004b0a:	4b45      	ldr	r3, [pc, #276]	; (8004c20 <AppLEDTask+0x5fc>)
  8004b0c:	6818      	ldr	r0, [r3, #0]
  8004b0e:	4b45      	ldr	r3, [pc, #276]	; (8004c24 <AppLEDTask+0x600>)
@@ -12938,7 +12972,7 @@ void AppLEDTask()
  8004b16:	b29b      	uxth	r3, r3
  8004b18:	461a      	mov	r2, r3
  8004b1a:	f7ff f9e7 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
+			PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
  8004b1e:	4b42      	ldr	r3, [pc, #264]	; (8004c28 <AppLEDTask+0x604>)
  8004b20:	6818      	ldr	r0, [r3, #0]
  8004b22:	4b42      	ldr	r3, [pc, #264]	; (8004c2c <AppLEDTask+0x608>)
@@ -12948,12 +12982,14 @@ void AppLEDTask()
  8004b2a:	b29b      	uxth	r3, r3
  8004b2c:	461a      	mov	r2, r3
  8004b2e:	f7ff f9dd 	bl	8003eec <PWM_SetDutyAdapt>
-				cpt_strob=0;
+
+			cpt_strob=0;
  8004b32:	4b2a      	ldr	r3, [pc, #168]	; (8004bdc <AppLEDTask+0x5b8>)
  8004b34:	2200      	movs	r2, #0
  8004b36:	601a      	str	r2, [r3, #0]
  8004b38:	e222      	b.n	8004f80 <AppLEDTask+0x95c>
-			else if(Strob_value_Rand>0 && cpt_strob>=(128-Strob_value_Rand)/2)
+		}
+		else if(Strob_value_Rand>0 && cpt_strob>=(128-Strob_value_Rand)/2)
  8004b3a:	4b26      	ldr	r3, [pc, #152]	; (8004bd4 <AppLEDTask+0x5b0>)
  8004b3c:	781b      	ldrb	r3, [r3, #0]
  8004b3e:	2b00      	cmp	r3, #0
@@ -12969,7 +13005,8 @@ void AppLEDTask()
  8004b56:	681b      	ldr	r3, [r3, #0]
  8004b58:	429a      	cmp	r2, r3
  8004b5a:	f200 8127 	bhi.w	8004dac <AppLEDTask+0x788>
-				rand_value = HAL_GetTick()%10;
+		{
+			rand_value = HAL_GetTick()%10;
  8004b5e:	f7fb ffbb 	bl	8000ad8 <HAL_GetTick>
  8004b62:	4601      	mov	r1, r0
  8004b64:	4b32      	ldr	r3, [pc, #200]	; (8004c30 <AppLEDTask+0x60c>)
@@ -12982,7 +13019,7 @@ void AppLEDTask()
  8004b74:	1aca      	subs	r2, r1, r3
  8004b76:	4613      	mov	r3, r2
  8004b78:	717b      	strb	r3, [r7, #5]
-				if(rand_value==0) PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]); else PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
+			if(rand_value==0) PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]); else PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
  8004b7a:	797b      	ldrb	r3, [r7, #5]
  8004b7c:	2b00      	cmp	r3, #0
  8004b7e:	d10a      	bne.n	8004b96 <AppLEDTask+0x572>
@@ -13003,7 +13040,7 @@ void AppLEDTask()
  8004b9e:	2200      	movs	r2, #0
  8004ba0:	4619      	mov	r1, r3
  8004ba2:	f7ff f9a3 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==1) PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]); else PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
+			if(rand_value==1) PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]); else PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
  8004ba6:	797b      	ldrb	r3, [r7, #5]
  8004ba8:	2b01      	cmp	r3, #1
  8004baa:	d143      	bne.n	8004c34 <AppLEDTask+0x610>
@@ -13053,7 +13090,7 @@ void AppLEDTask()
  8004c3c:	2200      	movs	r2, #0
  8004c3e:	4619      	mov	r1, r3
  8004c40:	f7ff f954 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==2) PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]); else PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
+			if(rand_value==2) PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]); else PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
  8004c44:	797b      	ldrb	r3, [r7, #5]
  8004c46:	2b02      	cmp	r3, #2
  8004c48:	d10a      	bne.n	8004c60 <AppLEDTask+0x63c>
@@ -13074,7 +13111,7 @@ void AppLEDTask()
  8004c68:	2200      	movs	r2, #0
  8004c6a:	4619      	mov	r1, r3
  8004c6c:	f7ff f93e 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==3) PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]); else PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
+			if(rand_value==3) PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]); else PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
  8004c70:	797b      	ldrb	r3, [r7, #5]
  8004c72:	2b03      	cmp	r3, #3
  8004c74:	d10a      	bne.n	8004c8c <AppLEDTask+0x668>
@@ -13095,7 +13132,7 @@ void AppLEDTask()
  8004c94:	2200      	movs	r2, #0
  8004c96:	4619      	mov	r1, r3
  8004c98:	f7ff f928 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==4) PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]); else PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
+			if(rand_value==4) PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]); else PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
  8004c9c:	797b      	ldrb	r3, [r7, #5]
  8004c9e:	2b04      	cmp	r3, #4
  8004ca0:	d10a      	bne.n	8004cb8 <AppLEDTask+0x694>
@@ -13116,7 +13153,7 @@ void AppLEDTask()
  8004cc0:	2200      	movs	r2, #0
  8004cc2:	4619      	mov	r1, r3
  8004cc4:	f7ff f912 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==5) PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]); else PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
+			if(rand_value==5) PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]); else PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
  8004cc8:	797b      	ldrb	r3, [r7, #5]
  8004cca:	2b05      	cmp	r3, #5
  8004ccc:	d10a      	bne.n	8004ce4 <AppLEDTask+0x6c0>
@@ -13137,7 +13174,7 @@ void AppLEDTask()
  8004cec:	2200      	movs	r2, #0
  8004cee:	4619      	mov	r1, r3
  8004cf0:	f7ff f8fc 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==6) PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]); else PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
+			if(rand_value==6) PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]); else PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
  8004cf4:	797b      	ldrb	r3, [r7, #5]
  8004cf6:	2b06      	cmp	r3, #6
  8004cf8:	d10a      	bne.n	8004d10 <AppLEDTask+0x6ec>
@@ -13158,7 +13195,7 @@ void AppLEDTask()
  8004d18:	2200      	movs	r2, #0
  8004d1a:	4619      	mov	r1, r3
  8004d1c:	f7ff f8e6 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==7) PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]); else PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
+			if(rand_value==7) PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]); else PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
  8004d20:	797b      	ldrb	r3, [r7, #5]
  8004d22:	2b07      	cmp	r3, #7
  8004d24:	d10a      	bne.n	8004d3c <AppLEDTask+0x718>
@@ -13179,7 +13216,7 @@ void AppLEDTask()
  8004d44:	2200      	movs	r2, #0
  8004d46:	4619      	mov	r1, r3
  8004d48:	f7ff f8d0 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==8) PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]); else PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
+			if(rand_value==8) PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]); else PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
  8004d4c:	797b      	ldrb	r3, [r7, #5]
  8004d4e:	2b08      	cmp	r3, #8
  8004d50:	d10a      	bne.n	8004d68 <AppLEDTask+0x744>
@@ -13200,7 +13237,7 @@ void AppLEDTask()
  8004d70:	2200      	movs	r2, #0
  8004d72:	4619      	mov	r1, r3
  8004d74:	f7ff f8ba 	bl	8003eec <PWM_SetDutyAdapt>
-				if(rand_value==9) PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]); else PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
+			if(rand_value==9) PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]); else PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
  8004d78:	797b      	ldrb	r3, [r7, #5]
  8004d7a:	2b09      	cmp	r3, #9
  8004d7c:	d10a      	bne.n	8004d94 <AppLEDTask+0x770>
@@ -13221,12 +13258,16 @@ void AppLEDTask()
  8004d9c:	2200      	movs	r2, #0
  8004d9e:	4619      	mov	r1, r3
  8004da0:	f7ff f8a4 	bl	8003eec <PWM_SetDutyAdapt>
-				cpt_strob=0;
+
+			cpt_strob=0;
  8004da4:	4b3f      	ldr	r3, [pc, #252]	; (8004ea4 <AppLEDTask+0x880>)
  8004da6:	2200      	movs	r2, #0
  8004da8:	601a      	str	r2, [r3, #0]
  8004daa:	e0e9      	b.n	8004f80 <AppLEDTask+0x95c>
-				PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
+		}
+		else
+		{
+			PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
  8004dac:	4b3e      	ldr	r3, [pc, #248]	; (8004ea8 <AppLEDTask+0x884>)
  8004dae:	6818      	ldr	r0, [r3, #0]
  8004db0:	4b3e      	ldr	r3, [pc, #248]	; (8004eac <AppLEDTask+0x888>)
@@ -13234,7 +13275,7 @@ void AppLEDTask()
  8004db4:	2200      	movs	r2, #0
  8004db6:	4619      	mov	r1, r3
  8004db8:	f7ff f898 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
+			PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
  8004dbc:	4b26      	ldr	r3, [pc, #152]	; (8004e58 <AppLEDTask+0x834>)
  8004dbe:	6818      	ldr	r0, [r3, #0]
  8004dc0:	4b26      	ldr	r3, [pc, #152]	; (8004e5c <AppLEDTask+0x838>)
@@ -13242,7 +13283,7 @@ void AppLEDTask()
  8004dc4:	2200      	movs	r2, #0
  8004dc6:	4619      	mov	r1, r3
  8004dc8:	f7ff f890 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
+			PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
  8004dcc:	4b24      	ldr	r3, [pc, #144]	; (8004e60 <AppLEDTask+0x83c>)
  8004dce:	6818      	ldr	r0, [r3, #0]
  8004dd0:	4b24      	ldr	r3, [pc, #144]	; (8004e64 <AppLEDTask+0x840>)
@@ -13250,7 +13291,7 @@ void AppLEDTask()
  8004dd4:	2200      	movs	r2, #0
  8004dd6:	4619      	mov	r1, r3
  8004dd8:	f7ff f888 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
+			PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
  8004ddc:	4b23      	ldr	r3, [pc, #140]	; (8004e6c <AppLEDTask+0x848>)
  8004dde:	6818      	ldr	r0, [r3, #0]
  8004de0:	4b23      	ldr	r3, [pc, #140]	; (8004e70 <AppLEDTask+0x84c>)
@@ -13258,7 +13299,7 @@ void AppLEDTask()
  8004de4:	2200      	movs	r2, #0
  8004de6:	4619      	mov	r1, r3
  8004de8:	f7ff f880 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
+			PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
  8004dec:	4b21      	ldr	r3, [pc, #132]	; (8004e74 <AppLEDTask+0x850>)
  8004dee:	6818      	ldr	r0, [r3, #0]
  8004df0:	4b21      	ldr	r3, [pc, #132]	; (8004e78 <AppLEDTask+0x854>)
@@ -13266,7 +13307,7 @@ void AppLEDTask()
  8004df4:	2200      	movs	r2, #0
  8004df6:	4619      	mov	r1, r3
  8004df8:	f7ff f878 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
+			PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
  8004dfc:	4b1f      	ldr	r3, [pc, #124]	; (8004e7c <AppLEDTask+0x858>)
  8004dfe:	6818      	ldr	r0, [r3, #0]
  8004e00:	4b1f      	ldr	r3, [pc, #124]	; (8004e80 <AppLEDTask+0x85c>)
@@ -13274,7 +13315,7 @@ void AppLEDTask()
  8004e04:	2200      	movs	r2, #0
  8004e06:	4619      	mov	r1, r3
  8004e08:	f7ff f870 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
+			PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
  8004e0c:	4b1d      	ldr	r3, [pc, #116]	; (8004e84 <AppLEDTask+0x860>)
  8004e0e:	6818      	ldr	r0, [r3, #0]
  8004e10:	4b1d      	ldr	r3, [pc, #116]	; (8004e88 <AppLEDTask+0x864>)
@@ -13282,7 +13323,7 @@ void AppLEDTask()
  8004e14:	2200      	movs	r2, #0
  8004e16:	4619      	mov	r1, r3
  8004e18:	f7ff f868 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
+			PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
  8004e1c:	4b1b      	ldr	r3, [pc, #108]	; (8004e8c <AppLEDTask+0x868>)
  8004e1e:	6818      	ldr	r0, [r3, #0]
  8004e20:	4b1b      	ldr	r3, [pc, #108]	; (8004e90 <AppLEDTask+0x86c>)
@@ -13290,7 +13331,7 @@ void AppLEDTask()
  8004e24:	2200      	movs	r2, #0
  8004e26:	4619      	mov	r1, r3
  8004e28:	f7ff f860 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
+			PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
  8004e2c:	4b19      	ldr	r3, [pc, #100]	; (8004e94 <AppLEDTask+0x870>)
  8004e2e:	6818      	ldr	r0, [r3, #0]
  8004e30:	4b19      	ldr	r3, [pc, #100]	; (8004e98 <AppLEDTask+0x874>)
@@ -13298,7 +13339,7 @@ void AppLEDTask()
  8004e34:	2200      	movs	r2, #0
  8004e36:	4619      	mov	r1, r3
  8004e38:	f7ff f858 	bl	8003eec <PWM_SetDutyAdapt>
-				PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
+			PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
  8004e3c:	4b17      	ldr	r3, [pc, #92]	; (8004e9c <AppLEDTask+0x878>)
  8004e3e:	6818      	ldr	r0, [r3, #0]
  8004e40:	4b17      	ldr	r3, [pc, #92]	; (8004ea0 <AppLEDTask+0x87c>)
@@ -13306,12 +13347,18 @@ void AppLEDTask()
  8004e44:	2200      	movs	r2, #0
  8004e46:	4619      	mov	r1, r3
  8004e48:	f7ff f850 	bl	8003eec <PWM_SetDutyAdapt>
-				cpt_strob++;
+
+			cpt_strob++;
  8004e4c:	4b15      	ldr	r3, [pc, #84]	; (8004ea4 <AppLEDTask+0x880>)
  8004e4e:	681b      	ldr	r3, [r3, #0]
  8004e50:	3301      	adds	r3, #1
  8004e52:	4a14      	ldr	r2, [pc, #80]	; (8004ea4 <AppLEDTask+0x880>)
  8004e54:	6013      	str	r3, [r2, #0]
+		PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
+		PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
+		PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
+		cpt_strob=0;
+	}
 }
  8004e56:	e093      	b.n	8004f80 <AppLEDTask+0x95c>
  8004e58:	200009c0 	.word	0x200009c0
@@ -13336,7 +13383,7 @@ void AppLEDTask()
  8004ea4:	200004bc 	.word	0x200004bc
  8004ea8:	20000994 	.word	0x20000994
  8004eac:	2000096c 	.word	0x2000096c
-			PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
+		PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
  8004eb0:	4b35      	ldr	r3, [pc, #212]	; (8004f88 <AppLEDTask+0x964>)
  8004eb2:	6818      	ldr	r0, [r3, #0]
  8004eb4:	4b35      	ldr	r3, [pc, #212]	; (8004f8c <AppLEDTask+0x968>)
@@ -13346,7 +13393,7 @@ void AppLEDTask()
  8004ebc:	b29b      	uxth	r3, r3
  8004ebe:	461a      	mov	r2, r3
  8004ec0:	f7ff f814 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
+		PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
  8004ec4:	4b33      	ldr	r3, [pc, #204]	; (8004f94 <AppLEDTask+0x970>)
  8004ec6:	6818      	ldr	r0, [r3, #0]
  8004ec8:	4b33      	ldr	r3, [pc, #204]	; (8004f98 <AppLEDTask+0x974>)
@@ -13356,7 +13403,7 @@ void AppLEDTask()
  8004ed0:	b29b      	uxth	r3, r3
  8004ed2:	461a      	mov	r2, r3
  8004ed4:	f7ff f80a 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]);
+		PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]);
  8004ed8:	4b30      	ldr	r3, [pc, #192]	; (8004f9c <AppLEDTask+0x978>)
  8004eda:	6818      	ldr	r0, [r3, #0]
  8004edc:	4b30      	ldr	r3, [pc, #192]	; (8004fa0 <AppLEDTask+0x97c>)
@@ -13366,7 +13413,7 @@ void AppLEDTask()
  8004ee4:	b29b      	uxth	r3, r3
  8004ee6:	461a      	mov	r2, r3
  8004ee8:	f7ff f800 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]);
+		PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]);
  8004eec:	4b2d      	ldr	r3, [pc, #180]	; (8004fa4 <AppLEDTask+0x980>)
  8004eee:	6818      	ldr	r0, [r3, #0]
  8004ef0:	4b2d      	ldr	r3, [pc, #180]	; (8004fa8 <AppLEDTask+0x984>)
@@ -13376,7 +13423,7 @@ void AppLEDTask()
  8004ef8:	b29b      	uxth	r3, r3
  8004efa:	461a      	mov	r2, r3
  8004efc:	f7fe fff6 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]);
+		PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]);
  8004f00:	4b2a      	ldr	r3, [pc, #168]	; (8004fac <AppLEDTask+0x988>)
  8004f02:	6818      	ldr	r0, [r3, #0]
  8004f04:	4b2a      	ldr	r3, [pc, #168]	; (8004fb0 <AppLEDTask+0x98c>)
@@ -13386,7 +13433,7 @@ void AppLEDTask()
  8004f0c:	b29b      	uxth	r3, r3
  8004f0e:	461a      	mov	r2, r3
  8004f10:	f7fe ffec 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]);
+		PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]);
  8004f14:	4b27      	ldr	r3, [pc, #156]	; (8004fb4 <AppLEDTask+0x990>)
  8004f16:	6818      	ldr	r0, [r3, #0]
  8004f18:	4b27      	ldr	r3, [pc, #156]	; (8004fb8 <AppLEDTask+0x994>)
@@ -13396,7 +13443,7 @@ void AppLEDTask()
  8004f20:	b29b      	uxth	r3, r3
  8004f22:	461a      	mov	r2, r3
  8004f24:	f7fe ffe2 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]);
+		PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]);
  8004f28:	4b24      	ldr	r3, [pc, #144]	; (8004fbc <AppLEDTask+0x998>)
  8004f2a:	6818      	ldr	r0, [r3, #0]
  8004f2c:	4b24      	ldr	r3, [pc, #144]	; (8004fc0 <AppLEDTask+0x99c>)
@@ -13406,7 +13453,7 @@ void AppLEDTask()
  8004f34:	b29b      	uxth	r3, r3
  8004f36:	461a      	mov	r2, r3
  8004f38:	f7fe ffd8 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
+		PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
  8004f3c:	4b21      	ldr	r3, [pc, #132]	; (8004fc4 <AppLEDTask+0x9a0>)
  8004f3e:	6818      	ldr	r0, [r3, #0]
  8004f40:	4b21      	ldr	r3, [pc, #132]	; (8004fc8 <AppLEDTask+0x9a4>)
@@ -13416,7 +13463,7 @@ void AppLEDTask()
  8004f48:	b29b      	uxth	r3, r3
  8004f4a:	461a      	mov	r2, r3
  8004f4c:	f7fe ffce 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
+		PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
  8004f50:	4b1e      	ldr	r3, [pc, #120]	; (8004fcc <AppLEDTask+0x9a8>)
  8004f52:	6818      	ldr	r0, [r3, #0]
  8004f54:	4b1e      	ldr	r3, [pc, #120]	; (8004fd0 <AppLEDTask+0x9ac>)
@@ -13426,7 +13473,7 @@ void AppLEDTask()
  8004f5c:	b29b      	uxth	r3, r3
  8004f5e:	461a      	mov	r2, r3
  8004f60:	f7fe ffc4 	bl	8003eec <PWM_SetDutyAdapt>
-			PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
+		PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
  8004f64:	4b1b      	ldr	r3, [pc, #108]	; (8004fd4 <AppLEDTask+0x9b0>)
  8004f66:	6818      	ldr	r0, [r3, #0]
  8004f68:	4b1b      	ldr	r3, [pc, #108]	; (8004fd8 <AppLEDTask+0x9b4>)
@@ -13436,7 +13483,7 @@ void AppLEDTask()
  8004f70:	b29b      	uxth	r3, r3
  8004f72:	461a      	mov	r2, r3
  8004f74:	f7fe ffba 	bl	8003eec <PWM_SetDutyAdapt>
-			cpt_strob=0;
+		cpt_strob=0;
  8004f78:	4b18      	ldr	r3, [pc, #96]	; (8004fdc <AppLEDTask+0x9b8>)
  8004f7a:	2200      	movs	r2, #0
  8004f7c:	601a      	str	r2, [r3, #0]

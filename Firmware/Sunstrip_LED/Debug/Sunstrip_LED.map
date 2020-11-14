@@ -4836,7 +4836,7 @@ OUTPUT(Sunstrip_LED.elf elf32-littlearm)
  .debug_macro   0x000000000001690b      0x1c7 Src/tim.o
  .debug_macro   0x0000000000016ad2      0x1c7 Src/usart.o
 
-.debug_line     0x0000000000000000     0xfe05
+.debug_line     0x0000000000000000     0xfdf7
  .debug_line    0x0000000000000000      0x7bf Drivers/Devices/Display/__Fonts.o
  .debug_line    0x00000000000007bf      0xcb8 Drivers/Devices/Display/ssd1306.o
  .debug_line    0x0000000000001477      0x6a8 Drivers/Devices/PWM/PWM.o
@@ -4855,17 +4855,17 @@ OUTPUT(Sunstrip_LED.elf elf32-littlearm)
  .debug_line    0x0000000000009e84      0x750 Drivers/System/Flash_Manager.o
  .debug_line    0x000000000000a5d4      0x6e3 Middlewares/Protocol/DMX/DMX.o
  .debug_line    0x000000000000acb7      0x74a Middlewares/Protocol/GENE_I2C/GENE_I2C_Master.o
- .debug_line    0x000000000000b401      0xded Src/App.o
- .debug_line    0x000000000000c1ee      0x694 Src/adc.o
- .debug_line    0x000000000000c882      0x676 Src/gpio.o
- .debug_line    0x000000000000cef8      0x6ca Src/main.o
- .debug_line    0x000000000000d5c2      0x65e Src/stm32f1xx_hal_msp.o
- .debug_line    0x000000000000dc20      0x725 Src/stm32f1xx_it.o
- .debug_line    0x000000000000e345      0x559 Src/sysmem.o
- .debug_line    0x000000000000e89e      0x68e Src/system_stm32f1xx.o
- .debug_line    0x000000000000ef2c      0x790 Src/tim.o
- .debug_line    0x000000000000f6bc      0x6ca Src/usart.o
- .debug_line    0x000000000000fd86       0x7f Startup/startup_stm32f103c8tx.o
+ .debug_line    0x000000000000b401      0xddf Src/App.o
+ .debug_line    0x000000000000c1e0      0x694 Src/adc.o
+ .debug_line    0x000000000000c874      0x676 Src/gpio.o
+ .debug_line    0x000000000000ceea      0x6ca Src/main.o
+ .debug_line    0x000000000000d5b4      0x65e Src/stm32f1xx_hal_msp.o
+ .debug_line    0x000000000000dc12      0x725 Src/stm32f1xx_it.o
+ .debug_line    0x000000000000e337      0x559 Src/sysmem.o
+ .debug_line    0x000000000000e890      0x68e Src/system_stm32f1xx.o
+ .debug_line    0x000000000000ef1e      0x790 Src/tim.o
+ .debug_line    0x000000000000f6ae      0x6ca Src/usart.o
+ .debug_line    0x000000000000fd78       0x7f Startup/startup_stm32f103c8tx.o
 
 .debug_str      0x0000000000000000    0x78b16
  .debug_str     0x0000000000000000    0x71fc7 Drivers/Devices/Display/__Fonts.o

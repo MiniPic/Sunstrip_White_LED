@@ -1,0 +1,5 @@
+Flash_Manager.c:19:10:FlashManager_PageAddress	0	static
+Flash_Manager.c:35:25:FlashManager_ErasePage	32	static
+Flash_Manager.c:53:25:FlashManager_WriteInt32	56	static
+Flash_Manager.c:96:25:FlashManager_WriteMulti	64	static
+Flash_Manager.c:142:10:FlashManager_ReadInt32	0	static

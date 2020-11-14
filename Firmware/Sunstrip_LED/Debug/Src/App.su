@@ -6,9 +6,9 @@ App.c:160:6:PatchPWMtoLED	16	static
 App.c:210:6:Update_Display	40	static
 App.c:343:6:Manage_Button	8	static
 App.c:407:6:AppLEDTask	24	static
-App.c:597:6:AppIHMTask	8	static
-App.c:769:6:App_Init	8	static
-App.c:826:6:ManageFan	8	static
-App.c:862:6:App	8	static
-App.c:885:6:HAL_TIM_PeriodElapsedCallback	16	static
-App.c:892:6:HAL_UART_RxCpltCallback	16	static
+App.c:596:6:AppIHMTask	8	static
+App.c:768:6:App_Init	8	static
+App.c:825:6:ManageFan	8	static
+App.c:861:6:App	8	static
+App.c:884:6:HAL_TIM_PeriodElapsedCallback	16	static
+App.c:891:6:HAL_UART_RxCpltCallback	16	static

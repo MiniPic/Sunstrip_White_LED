@@ -347,7 +347,7 @@ void Manage_Button()
 	static uint32_t time_BpOk=0;
 
 	//UP
-	if(!HAL_GPIO_ReadPin(T1_GPIO_Port, T1_Pin))
+	if(!HAL_GPIO_ReadPin(T3_GPIO_Port, T3_Pin))
 	{
 		if(Bp_Up==BP_OFF)
 		{
@@ -366,7 +366,7 @@ void Manage_Button()
 		Bp_Up=BP_OFF;
 
 	//DOWN
-	if(!HAL_GPIO_ReadPin(T3_GPIO_Port, T3_Pin))
+	if(!HAL_GPIO_ReadPin(T1_GPIO_Port, T1_Pin))
 	{
 		if(Bp_Down==BP_OFF)
 		{
@@ -525,58 +525,12 @@ void AppLEDTask()
 			}
 			DMX_signal_OK = __TRUE;
 		}
+	}
 
-		//Set value on LED
-		if(temp_strob_value>0)	//STROB
-		{
-			if(Strob_value_Full>0 && cpt_strob>=(129-Strob_value_Full)/2)
-			{
-				PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
-				PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
-				PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]);
-				PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]);
-				PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]);
-				PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]);
-				PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]);
-				PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
-				PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
-				PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
-
-				cpt_strob=0;
-			}
-			else if(Strob_value_Rand>0 && cpt_strob>=(128-Strob_value_Rand)/2)
-			{
-				rand_value = HAL_GetTick()%10;
-				if(rand_value==0) PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]); else PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
-				if(rand_value==1) PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]); else PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
-				if(rand_value==2) PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]); else PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
-				if(rand_value==3) PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]); else PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
-				if(rand_value==4) PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]); else PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
-				if(rand_value==5) PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]); else PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
-				if(rand_value==6) PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]); else PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
-				if(rand_value==7) PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]); else PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
-				if(rand_value==8) PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]); else PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
-				if(rand_value==9) PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]); else PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
-
-				cpt_strob=0;
-			}
-			else
-			{
-				PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
-				PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
-				PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
-				PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
-				PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
-				PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
-				PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
-				PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
-				PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
-				PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
-
-				cpt_strob++;
-			}
-		}
-		else	//NON STROB
+	//Set value on LED
+	if(temp_strob_value>0)	//STROB
+	{
+		if(Strob_value_Full>0 && cpt_strob>=(129-Strob_value_Full)/2)
 		{
 			PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
 			PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
@@ -588,9 +542,54 @@ void AppLEDTask()
 			PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
 			PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
 			PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
+
 			cpt_strob=0;
 		}
+		else if(Strob_value_Rand>0 && cpt_strob>=(128-Strob_value_Rand)/2)
+		{
+			rand_value = HAL_GetTick()%10;
+			if(rand_value==0) PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]); else PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
+			if(rand_value==1) PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]); else PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
+			if(rand_value==2) PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]); else PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
+			if(rand_value==3) PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]); else PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
+			if(rand_value==4) PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]); else PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
+			if(rand_value==5) PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]); else PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
+			if(rand_value==6) PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]); else PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
+			if(rand_value==7) PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]); else PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
+			if(rand_value==8) PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]); else PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
+			if(rand_value==9) PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]); else PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
 
+			cpt_strob=0;
+		}
+		else
+		{
+			PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,0);
+			PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,0);
+			PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,0);
+			PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,0);
+			PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,0);
+			PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,0);
+			PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,0);
+			PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,0);
+			PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,0);
+			PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,0);
+
+			cpt_strob++;
+		}
+	}
+	else	//NON STROB
+	{
+		PWM_SetDutyAdapt(LED1_pwmtimer,LED1_PWMchannel,(uint32_t)Current_Value[0]);
+		PWM_SetDutyAdapt(LED2_pwmtimer,LED2_PWMchannel,(uint32_t)Current_Value[1]);
+		PWM_SetDutyAdapt(LED3_pwmtimer,LED3_PWMchannel,(uint32_t)Current_Value[2]);
+		PWM_SetDutyAdapt(LED4_pwmtimer,LED4_PWMchannel,(uint32_t)Current_Value[3]);
+		PWM_SetDutyAdapt(LED5_pwmtimer,LED5_PWMchannel,(uint32_t)Current_Value[4]);
+		PWM_SetDutyAdapt(LED6_pwmtimer,LED6_PWMchannel,(uint32_t)Current_Value[5]);
+		PWM_SetDutyAdapt(LED7_pwmtimer,LED7_PWMchannel,(uint32_t)Current_Value[6]);
+		PWM_SetDutyAdapt(LED8_pwmtimer,LED8_PWMchannel,(uint32_t)Current_Value[7]);
+		PWM_SetDutyAdapt(LED9_pwmtimer,LED9_PWMchannel,(uint32_t)Current_Value[8]);
+		PWM_SetDutyAdapt(LED10_pwmtimer,LED10_PWMchannel,(uint32_t)Current_Value[9]);
+		cpt_strob=0;
 	}
 }
 

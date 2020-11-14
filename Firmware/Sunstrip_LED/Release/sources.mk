@@ -21,11 +21,6 @@ Drivers/Devices/Display \
 Drivers/Devices/PWM \
 Drivers/STM32F1xx_HAL_Driver/Src \
 Drivers/System \
-Middlewares/Protocol/DMX \
-Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
-Middlewares/Third_Party/FreeRTOS/Source \
-Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3 \
-Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
 Src \
 Startup \
 
